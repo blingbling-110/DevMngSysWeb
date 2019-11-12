@@ -1,35 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<meta name="description" content="">
-		<meta name="author" content="">
-		<title>Signin Template for Bootstrap</title>
+		<meta name="description" content="设备管理系统登录界面">
+		<meta name="author" content="覃子俊">
+		<title>[[#{login.title}]]</title>
 		<!-- Bootstrap core CSS -->
-		<link href="asserts/css/bootstrap.min.css" rel="stylesheet">
+		<link th:href="@{asserts/css/bootstrap.min.css}" rel="stylesheet">
 		<!-- Custom styles for this template -->
-		<link href="asserts/css/signin.css" rel="stylesheet">
+		<link th:href="@{asserts/css/signin.css}" rel="stylesheet">
 	</head>
 
 	<body class="text-center">
 		<form class="form-signin" action="dashboard.html">
-			<img class="mb-4" src="asserts/img/bootstrap-solid.svg" alt="" width="72" height="72">
-			<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-			<label class="sr-only">Username</label>
-			<input type="text" class="form-control" placeholder="Username" required="" autofocus="">
-			<label class="sr-only">Password</label>
-			<input type="password" class="form-control" placeholder="Password" required="">
+			<img class="mb-4" th:src="@{/favicon.ico}" alt="favicon" width="72" height="72">
+			<h1 class="h3 mb-3 font-weight-normal" th:text="#{login.title}">Please sign in</h1>
+			<br>
+			<h1 class="h3 mb-3 font-weight-normal" th:text="#{login.info}">Please sign in</h1>
+			<label class="sr-only" th:text="#{login.username}">Username</label>
+			<input type="text" class="form-control" th:placeholder="#{login.username}" required="" autofocus="">
+			<label class="sr-only" th:text="#{login.password}">Password</label>
+			<input type="password" class="form-control" th:placeholder="#{login.password}" required="">
 			<div class="checkbox mb-3">
 				<label>
-          <input type="checkbox" value="remember-me"> Remember me
+          <input type="checkbox" value="remember-me"> [[#{login.remember}]]
         </label>
 			</div>
-			<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-			<p class="mt-5 mb-3 text-muted">© 2017-2018</p>
-			<a class="btn btn-sm">中文</a>
-			<a class="btn btn-sm">English</a>
+			<button class="btn btn-lg btn-primary btn-block" type="submit" th:text="#{login.button}">Sign in</button>
+			<p class="mt-5 mb-3 text-muted">Copyright © 2019-2020 qinzijun<br>All Rights Reserved.</p>
+			<a class="btn btn-sm" th:href="@{/index.html(lang='zh_CN')}">中文</a>
+			<a class="btn btn-sm" th:href="@{/index.html(lang='en_US')}">English</a>
 		</form>
+		<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/2.0.1/canvas-nest.js"></script>
 
 	</body>
 

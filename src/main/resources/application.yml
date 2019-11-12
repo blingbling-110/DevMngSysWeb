@@ -1,6 +1,33 @@
 spring:
+  profiles:
+    active:
+      - dev
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/
     username: root
     password: 123456
+
+  messages:
+    # 配置国际化资源文件的基本名称（配置文件的路径、基本名称）
+    basename: i18n.login
+
+---
+
+spring:
+  profiles: dev
+
+  thymeleaf:
+    cache: false # 禁用thymeleaf缓存
+
+server:
+  port: 80
+
+---
+
+spring:
+  profiles: prod
+
+server:
+  port: 8083
