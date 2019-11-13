@@ -18,6 +18,7 @@
     <h1 class="h3 mb-3 font-weight-normal" th:text="#{login.title}">Please sign in</h1>
     <br>
     <h1 class="h3 mb-3 font-weight-normal" th:text="#{login.info}">Please sign in</h1>
+    <p style="color: red;" th:text="${error}" th:unless="${#strings.isEmpty(error)}"></p>
     <label class="sr-only" th:text="#{login.username}">Username</label>
     <input type="text" name="username" class="form-control" th:placeholder="#{login.username}" required="" autofocus="">
     <label class="sr-only" th:text="#{login.password}">Password</label>
