@@ -19,13 +19,21 @@ public class LoginController {
     public ModelAndView login(@RequestParam("username") String username,
                               @RequestParam("password") String password,
                               HttpSession httpSession,
-                              RedirectAttributes redirectAttributes) {
+                              RedirectAttributes redirectAttributes,
+                              @RequestParam("lang") String language) {
+        ModelAndView modelAndView;
         if (loginService.login(username, password)) {
             httpSession.setAttribute("username", username);
-            return new ModelAndView("redirect:dashboard.html");//重定向，防止表单重复提交
+            modelAndView = new ModelAndView("redirect:dashboard.html");//重定向，防止表单重复提交
         } else {
             redirectAttributes.addFlashAttribute("error", "用户名或密码错误");
-            return new ModelAndView("redirect:/");
+            modelAndView = new ModelAndView("redirect:/");
+        }
+        if (language == null || language.isEmpty())
+            return modelAndView;
+        else {
+            modelAndView.addObject("lang", language);
+            return modelAndView;
         }
     }
 }

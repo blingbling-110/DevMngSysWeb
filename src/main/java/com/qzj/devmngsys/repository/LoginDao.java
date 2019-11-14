@@ -10,13 +10,13 @@ public class LoginDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public boolean login(String username, String password) {
+    public String getPassword(String username) {
         String sql = "select pwd from tb_userinfo where userid=\"" + username + "\"";
         try {
             String pwd = jdbcTemplate.queryForObject(sql, String.class);
-            return password.equals(pwd);
+            return pwd;
         } catch (EmptyResultDataAccessException e) {
-            return false;
+            return null;
         }
     }
 }

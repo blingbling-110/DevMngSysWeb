@@ -13,12 +13,13 @@
 </head>
 
 <body class="text-center">
-<form class="form-signin" th:action="@{/login}" method="post">
-    <img class="mb-4" th:src="@{/devicehub.png}" alt="devicehub.png" width="300" height="214">
+<form class="form-signin" th:action="@{/login(lang=${#request.getParameter('lang')})}" method="post">
+    <img class="mb-4" th:src="@{/devmngsys.png}" alt="devmngsys" width="300" height="214">
     <h1 class="h3 mb-3 font-weight-normal" th:text="#{login.title}">Please sign in</h1>
     <br>
     <h1 class="h3 mb-3 font-weight-normal" th:text="#{login.info}">Please sign in</h1>
-    <p style="color: red;" th:text="${error}" th:unless="${#strings.isEmpty(error)}"></p>
+    <p style="color: red;" th:text="#{login.error}" th:unless="${#strings.isEmpty(error)}"></p>
+    <p style="color: red;" th:text="#{login.permission}" th:unless="${#strings.isEmpty(permission)}"></p>
     <label class="sr-only" th:text="#{login.username}">Username</label>
     <input type="text" name="username" class="form-control" th:placeholder="#{login.username}" required="" autofocus="">
     <label class="sr-only" th:text="#{login.password}">Password</label>

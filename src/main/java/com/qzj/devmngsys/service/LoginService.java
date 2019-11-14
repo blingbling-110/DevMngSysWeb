@@ -10,7 +10,8 @@ public class LoginService {
     private LoginDao loginDao;
 
     public boolean login(String username, String password) {
-        if (loginDao.login(username, password))
+        String pwd = loginDao.getPassword(username);
+        if (password.equals(pwd))
             return true;
         else
             return false;
