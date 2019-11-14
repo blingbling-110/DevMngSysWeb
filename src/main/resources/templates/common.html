@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>公共页面</title>
+</head>
+<body>
+
+<div th:fragment="footer">
+    <p class="mt-5 mb-3 text-muted">Copyright © 2019-2020 qinzijun<br>All Rights Reserved.</p>
+    <a class="btn btn-sm" th:href="@{${#request.requestURL}(lang='zh_CN')}">中文</a>
+    <a class="btn btn-sm" th:href="@{${#request.requestURL}(lang='en_US')}">English</a>
+    <!--交互式页面动态背景-->
+    <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/2.0.1/canvas-nest.js"></script>
+</div>
+
+</body>
+</html>

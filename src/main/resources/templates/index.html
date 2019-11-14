@@ -14,7 +14,7 @@
 
 <body class="text-center">
 <form class="form-signin" th:action="@{/login(lang=${#request.getParameter('lang')})}" method="post">
-    <img class="mb-4" th:src="@{/devmngsys.png}" alt="devmngsys" width="300" height="214">
+    <img class="mb-4" th:src="@{/asserts/img/devmngsys.png}" alt="devmngsys" width="300" height="214">
     <h1 class="h3 mb-3 font-weight-normal" th:text="#{login.title}">Please sign in</h1>
     <br>
     <h1 class="h3 mb-3 font-weight-normal" th:text="#{login.info}">Please sign in</h1>
@@ -30,12 +30,9 @@
         </label>
     </div>
     <button class="btn btn-lg btn-primary btn-block" type="submit" th:text="#{login.button}">Sign in</button>
-    <p class="mt-5 mb-3 text-muted">Copyright © 2019-2020 qinzijun<br>All Rights Reserved.</p>
-    <a class="btn btn-sm" th:href="@{/(lang='zh_CN')}">中文</a>
-    <a class="btn btn-sm" th:href="@{/(lang='en_US')}">English</a>
 </form>
-<!--交互式页面动态背景-->
-<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/2.0.1/canvas-nest.js"></script>
+
+<div th:insert="~{common::footer}"></div>
 
 </body>
 

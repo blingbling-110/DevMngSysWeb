@@ -10,8 +10,7 @@ spring:
     password: 123456
 
   messages:
-    # 配置国际化资源文件的基本名称（配置文件的路径、基本名称）
-    basename: i18n.login
+    basename: i18n.login, i18n.dashboard # 配置国际化资源文件的基本名称（配置文件的路径、基本名称）
 
 ---
 
