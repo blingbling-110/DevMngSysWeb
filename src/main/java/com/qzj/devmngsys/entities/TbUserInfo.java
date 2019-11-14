@@ -1,4 +1,4 @@
-package com.qzj.devmngsys.model;
+package com.qzj.devmngsys.entities;
 
 /**
  * 	人员信息公共类：用于封装tb_userinfo数据表
