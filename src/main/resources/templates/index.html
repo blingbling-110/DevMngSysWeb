@@ -13,8 +13,9 @@
 </head>
 
 <body class="text-center">
-<form class="form-signin" th:action="@{/login(lang=${#request.getParameter('lang')})}" method="post">
-    <img class="mb-4" th:src="@{/asserts/img/devmngsys.png}" alt="devmngsys" width="300" height="214">
+<form class="form-signin" th:action="@{/login(lang=${#request.getParameter('lang')})}" method="post"
+      style="max-width: 430px;">
+    <img class="mb-4" th:src="@{/asserts/img/devmngsys.png}" alt="devmngsys.png" width="300" height="214">
     <h1 class="h3 mb-3 font-weight-normal" th:text="#{login.title}">Please sign in</h1>
     <br>
     <h1 class="h3 mb-3 font-weight-normal" th:text="#{login.info}">Please sign in</h1>
@@ -29,7 +30,8 @@
             <input type="checkbox" value="remember-me"> [[#{login.remember}]]
         </label>
     </div>
-    <button class="btn btn-lg btn-primary btn-block" type="submit" th:text="#{login.button}">Sign in</button>
+    <button class="btn btn-lg btn-primary btn-block" type="submit"
+            th:text="#{login.button}" style="background-color: #f36f20;">Sign in</button>
     <div th:insert="~{common::footer}"></div>
 </form>
 
