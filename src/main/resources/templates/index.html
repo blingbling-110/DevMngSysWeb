@@ -32,8 +32,11 @@
     </div>
     <button class="btn btn-lg btn-primary btn-block" type="submit"
             th:text="#{login.button}" style="background-color: #f36f20;">Sign in</button>
-    <div th:insert="~{common::footer}"></div>
+    <div th:replace="common::footer"></div>
 </form>
+
+<!--交互式页面动态背景-->
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/2.0.1/canvas-nest.js"></script>
 
 </body>
 
