@@ -44,21 +44,21 @@
                     [[#{common.users}]] <span class="sr-only" th:if="${page} == 'users'">(current)</span>
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" th:if="${session.isAdmin}">
                 <a th:class="${page} == 'borrow' ? 'nav-link active' : 'nav-link'"
                    th:href="@{/borrow(lang=${param.lang})}">
                     <img th:src="@{/asserts/img/borrow.png}" alt="borrow.png" class="feather feather-file"/>
                     [[#{common.borrow}]] <span class="sr-only" th:if="${page} == 'borrow'">(current)</span>
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" th:if="${session.isAdmin}">
                 <a th:class="${page} == 'return' ? 'nav-link active' : 'nav-link'"
                    th:href="@{/return(lang=${param.lang})}">
                     <img th:src="@{/asserts/img/return.png}" alt="return.png" class="feather feather-file"/>
                     [[#{common.return}]] <span class="sr-only" th:if="${page} == 'return'">(current)</span>
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" th:if="${session.isAdmin}">
                 <a th:class="${page} == 'backup' ? 'nav-link active' : 'nav-link'"
                    th:href="@{/backup(lang=${param.lang})}">
                     <img th:src="@{/asserts/img/backup.png}" alt="backup.png" class="feather feather-file"/>

@@ -27,6 +27,8 @@ public class LoginController {
         ModelAndView modelAndView;
         if (loginService.login(username, password)) {
             httpSession.setAttribute("username", username);
+            boolean IsAdmin = loginService.isAdmin(username);
+            httpSession.setAttribute("isAdmin", IsAdmin);
             modelAndView = new ModelAndView("redirect:toDashboard");//重定向，防止表单重复提交
         } else {
             redirectAttributes.addFlashAttribute("error", "用户名或密码错误");

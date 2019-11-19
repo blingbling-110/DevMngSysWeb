@@ -16,4 +16,8 @@ public class LoginService {
         else
             return false;
     }
+
+    public boolean isAdmin(String username) {
+        return loginDao.isAdmin(username);
+    }
 }

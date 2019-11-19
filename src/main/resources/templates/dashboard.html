@@ -24,7 +24,7 @@
         <div th:replace="common::sidebar(page='dashboard')"></div>
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-            <h2>Section title</h2>
+            <h2 th:text="#{dashboard.mydevice}">Section title</h2>
             <div class="table-responsive">
                 <table class="table table-striped table-sm">
                     <thead>
@@ -174,7 +174,8 @@
 </script>
 
 <!--交互式页面动态背景-->
-<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/2.0.1/canvas-nest.js"></script>
+<script type="text/javascript" color="243,111,32" opacity='1' zIndex="-1" count="150"
+        src="asserts/js/canvas-nest.js"></script>
 
 </body>
 

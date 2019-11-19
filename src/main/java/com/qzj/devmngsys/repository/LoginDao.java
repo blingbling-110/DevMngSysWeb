@@ -19,4 +19,9 @@ public class LoginDao {
             return null;
         }
     }
+
+    public boolean isAdmin(String username) {
+        String sql = "select isadmin from tb_userinfo where userid=\"" + username + "\"";
+        return jdbcTemplate.queryForObject(sql, boolean.class);
+    }
 }
