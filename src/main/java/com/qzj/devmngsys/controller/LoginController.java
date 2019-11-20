@@ -21,13 +21,13 @@ public class LoginController {
     @PostMapping("/login")
     public ModelAndView login(@RequestParam("username") String username,
                               @RequestParam("password") String password,
+                              @RequestParam("lang") String language,
                               HttpSession httpSession,
-                              RedirectAttributes redirectAttributes,
-                              @RequestParam("lang") String language) {
+                              RedirectAttributes redirectAttributes) {
         ModelAndView modelAndView;
         if (loginService.login(username, password)) {
-            httpSession.setAttribute("username", username);
             boolean IsAdmin = loginService.isAdmin(username);
+            httpSession.setAttribute("username", username);
             httpSession.setAttribute("isAdmin", IsAdmin);
             modelAndView = new ModelAndView("redirect:toDashboard");//重定向，防止表单重复提交
         } else {

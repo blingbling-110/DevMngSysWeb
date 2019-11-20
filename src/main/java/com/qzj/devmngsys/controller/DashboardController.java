@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class dashboardController {
+public class DashboardController {
     @Autowired
     private CommonService commonService;
 

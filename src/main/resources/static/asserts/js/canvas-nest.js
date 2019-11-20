@@ -23,7 +23,8 @@
       z: get_attribute(script, "zIndex", -1), //z-index
       o: get_attribute(script, "opacity", 0.5), //opacity
       c: get_attribute(script, "color", "0,0,0"), //color
-      n: get_attribute(script, "count", 99) //count
+      n: get_attribute(script, "count", 99), //count
+      p: get_attribute(script, "pointColor", "0,0,0") //pointColor
     };
   }
   //设置canvas的高宽
@@ -43,6 +44,7 @@
       r.y += r.ya, //移动
       r.xa *= r.x > canvas_width || r.x < 0 ? -1 : 1, 
       r.ya *= r.y > canvas_height || r.y < 0 ? -1 : 1, //碰到边界，反向反弹
+          context.fillStyle = "rgba(" + config.p + ")";
       context.fillRect(r.x - 0.5, r.y - 0.5, 1, 1); //绘制一个宽高为1的点
       //从下一个点开始
       for (i = idx + 1; i < all_array.length; i++) {
@@ -71,7 +73,7 @@
     canvas_id = "c_n" + config.l, //canvas id
     context = the_canvas.getContext("2d"), canvas_width, canvas_height, 
     frame_func = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function(func) {
-      window.setTimeout(func, 1000 / 45);
+      window.setTimeout(func, 1000 / 60);
     }, random = Math.random, 
     current_point = {
       x: null, //当前鼠标x
@@ -113,6 +115,6 @@
   all_array = random_points.concat([current_point]);
   //0.1秒后绘制
   setTimeout(function() {
-    draw_canvas();
+    frame_func(draw_canvas);
   }, 100);
 }();

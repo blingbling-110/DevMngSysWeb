@@ -13,7 +13,7 @@
          th:text="#{common.title}" aria-label="Device Management System"></div>
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-            <a class="nav-link" href="http://getbootstrap.com/docs/4.0/examples/dashboard/#"
+            <a class="nav-link" th:href="@{/signOut(lang=${param.lang})}"
                th:text="#{common.signout}">Sign out</a>
         </li>
     </ul>
