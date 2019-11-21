@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 @Service
-public class CommonService {
+public class LocaleService {
     public ModelAndView addLang(ModelAndView modelAndView, String language) {
         if (language != null && !language.isEmpty())
             modelAndView.addObject("lang", language);

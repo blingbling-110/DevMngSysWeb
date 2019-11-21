@@ -1,6 +1,6 @@
 package com.qzj.devmngsys.controller;
 
-import com.qzj.devmngsys.service.CommonService;
+import com.qzj.devmngsys.service.LocaleService;
 import com.qzj.devmngsys.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,13 +19,13 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
     @Autowired
-    private CommonService commonService;
+    private LocaleService localeService;
 
     @PostMapping("/login")
     public ModelAndView login(@RequestParam("username") String username,
                               @RequestParam("password") String password,
                               @RequestParam("lang") String language,
-                              @RequestParam("remember") String remember,
+                              @RequestParam(value = "remember", required = false) String remember,
                               HttpSession httpSession,
                               RedirectAttributes redirectAttributes,
                               HttpServletRequest request,
@@ -50,6 +50,6 @@ public class LoginController {
             cookie.setPath(request.getContextPath());
             response.addCookie(cookie);
         }
-        return commonService.addLang(modelAndView, language);
+        return localeService.addLang(modelAndView, language);
     }
 }
