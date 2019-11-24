@@ -36,19 +36,19 @@ public class LoginController {
             httpSession.setAttribute("username", username);
             httpSession.setAttribute("isAdmin", IsAdmin);
             modelAndView = new ModelAndView("redirect:toDashboard");//重定向，防止表单重复提交
+            if ("on".equals(remember)) {//是否记住用户登录状态，利用cookie实现
+                Cookie cookie = new Cookie("username", username);
+                cookie.setMaxAge(90 * 24 * 60 * 60);//cookie过期时间设置为三个月
+                cookie.setPath(request.getContextPath());
+                response.addCookie(cookie);
+                cookie = new Cookie("password", password);
+                cookie.setMaxAge(90 * 24 * 60 * 60);//cookie过期时间设置为三个月
+                cookie.setPath(request.getContextPath());
+                response.addCookie(cookie);
+            }
         } else {
             redirectAttributes.addFlashAttribute("error", "用户名或密码错误");
             modelAndView = new ModelAndView("redirect:/");
-        }
-        if ("on".equals(remember)) {//是否记住用户登录状态，利用cookie实现
-            Cookie cookie = new Cookie("username", username);
-            cookie.setMaxAge(90 * 24 * 60 * 60);//cookie过期时间设置为三个月
-            cookie.setPath(request.getContextPath());
-            response.addCookie(cookie);
-            cookie = new Cookie("password", password);
-            cookie.setMaxAge(90 * 24 * 60 * 60);//cookie过期时间设置为三个月
-            cookie.setPath(request.getContextPath());
-            response.addCookie(cookie);
         }
         return localeService.addLang(modelAndView, language);
     }
