@@ -48,7 +48,7 @@ public class LoginController {
             }
         } else {
             redirectAttributes.addFlashAttribute("error", "用户名或密码错误");
-            modelAndView = new ModelAndView("redirect:/");
+            modelAndView = new ModelAndView("redirect:/index");
         }
         return localeService.addLang(modelAndView, language);
     }

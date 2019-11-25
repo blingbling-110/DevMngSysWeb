@@ -1,5 +1,7 @@
 package com.qzj.devmngsys.bean;
 
+import com.qzj.devmngsys.service.LoginService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.thymeleaf.util.StringUtils;
 
@@ -8,10 +10,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class LoginHandlerInterceptor implements HandlerInterceptor {
+    @Autowired
+    private LoginService loginService;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String username = null;
         String password = null;
+
+        if (request.getSession().getAttribute("username") != null) {
+            if ("/".equals(request.getRequestURI()))
+                request.getRequestDispatcher("/toDashboard").forward(request, response);//请求转发
+            return true;
+        }
         Cookie[] cookies = request.getCookies();
         if (cookies != null && cookies.length != 0) {
             //获取登录cookie
@@ -24,14 +35,21 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
             }
         }
         if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
-            if (request.getSession().getAttribute("username") == null) {
+            if (!"/".equals(request.getRequestURI()))
                 request.setAttribute("permission", "请先登录系统");
-                request.getRequestDispatcher("/").forward(request, response);//请求转发
-                return false;
-            } else
-                return true;
+            request.getRequestDispatcher("/index").forward(request, response);//请求转发
+            return false;
         }
-        request.getSession().setAttribute("username", username);
-        return true;
+        if (loginService.login(username, password)) {//验证cookie
+            boolean IsAdmin = loginService.isAdmin(username);
+            request.getSession().setAttribute("username", username);
+            request.getSession().setAttribute("isAdmin", IsAdmin);
+            if ("/".equals(request.getRequestURI()))
+                request.getRequestDispatcher("/dashboard").forward(request, response);//请求转发
+            return true;
+        }
+        request.setAttribute("error", "用户名或密码错误");
+        request.getRequestDispatcher("/index").forward(request, response);//请求转发
+        return false;
     }
 }

@@ -39,6 +39,6 @@ public class SignOutController {
                 }
             }
         }
-        return localeService.addLang(new ModelAndView("redirect:/"), language);
+        return localeService.addLang(new ModelAndView("redirect:/index"), language);
     }
 }
