@@ -8,7 +8,7 @@
 
 <!--顶栏-->
 <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0" th:fragment="topbar">
-    <div class="navbar-brand col-sm-3 col-md-2 mr-0" th:text="${session.username}"></div>
+    <div class="navbar-brand col-sm-3 col-md-2 mr-0" th:text="${session.tbUserInfo.getName()}"></div>
     <div class="form-control form-control-dark w-100 text-center"
          th:text="#{common.title}" aria-label="Device Management System"></div>
     <ul class="navbar-nav px-3">
@@ -44,21 +44,21 @@
                     [[#{common.users}]] <span class="sr-only" th:if="${page} == 'users'">(current)</span>
                 </a>
             </li>
-            <li class="nav-item" th:if="${session.isAdmin}">
+            <li class="nav-item" th:if="${session.tbUserInfo.isIsadmin()}">
                 <a th:class="${page} == 'borrow' ? 'nav-link active' : 'nav-link'"
                    th:href="@{/borrow(lang=${param.lang})}">
                     <img th:src="@{/asserts/img/borrow.png}" alt="borrow.png" class="feather feather-file"/>
                     [[#{common.borrow}]] <span class="sr-only" th:if="${page} == 'borrow'">(current)</span>
                 </a>
             </li>
-            <li class="nav-item" th:if="${session.isAdmin}">
+            <li class="nav-item" th:if="${session.tbUserInfo.isIsadmin()}">
                 <a th:class="${page} == 'return' ? 'nav-link active' : 'nav-link'"
                    th:href="@{/return(lang=${param.lang})}">
                     <img th:src="@{/asserts/img/return.png}" alt="return.png" class="feather feather-file"/>
                     [[#{common.return}]] <span class="sr-only" th:if="${page} == 'return'">(current)</span>
                 </a>
             </li>
-            <li class="nav-item" th:if="${session.isAdmin}">
+            <li class="nav-item" th:if="${session.tbUserInfo.isIsadmin()}">
                 <a th:class="${page} == 'backup' ? 'nav-link active' : 'nav-link'"
                    th:href="@{/backup(lang=${param.lang})}">
                     <img th:src="@{/asserts/img/backup.png}" alt="backup.png" class="feather feather-file"/>

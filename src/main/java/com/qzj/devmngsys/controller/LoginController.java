@@ -32,9 +32,7 @@ public class LoginController {
                               HttpServletResponse response) {
         ModelAndView modelAndView;
         if (loginService.login(username, password)) {//验证用户名密码是否正确
-            boolean IsAdmin = loginService.isAdmin(username);
-            httpSession.setAttribute("username", username);
-            httpSession.setAttribute("isAdmin", IsAdmin);
+            httpSession.setAttribute("tbUserInfo", loginService.tbUserInfo);
             modelAndView = new ModelAndView("redirect:toDashboard");//重定向，防止表单重复提交
             if ("on".equals(remember)) {//是否记住用户登录状态，利用cookie实现
                 Cookie cookie = new Cookie("username", username);

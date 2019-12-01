@@ -19,7 +19,7 @@ public class TbUserInfo {
     /**
      * 	用户名
      */
-    private String userId;
+    private String userid;
 
     /**
      * 	密码
@@ -54,7 +54,7 @@ public class TbUserInfo {
     /**
      * 	是否拥有管理权限
      */
-    private boolean isAdmin;
+    private boolean isadmin;
 
     public TbUserInfo() {
     }
@@ -63,19 +63,19 @@ public class TbUserInfo {
         this.id = id;
     }
 
-    public TbUserInfo(Integer id, String name, String userId,
+    public TbUserInfo(Integer id, String name, String userid,
                       String pwd, String pos, String dep, String email,
-                      String tel, String remark, boolean isAdmin) {
+                      String tel, String remark, boolean isadmin) {
         this.id = id;
         this.name = name;
-        this.userId = userId;
+        this.userid = userid;
         this.pwd = pwd;
         this.pos = pos;
         this.dep = dep;
         this.email = email;
         this.tel = tel;
         this.remark = remark;
-        this.isAdmin = isAdmin;
+        this.isadmin = isadmin;
     }
 
     //	使用Getters和Setters方法将公共类的私有属性封装起来
@@ -109,17 +109,17 @@ public class TbUserInfo {
     }
 
     /**
-     * @return userId
+     * @return userid
      */
-    public String getUserId() {
-        return userId;
+    public String getUserid() {
+        return userid;
     }
 
     /**
-     * @param userId 要设置的 userId
+     * @param userid 要设置的 userid
      */
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
 
     /**
@@ -207,16 +207,16 @@ public class TbUserInfo {
     }
 
     /**
-     * @return isAdmin
+     * @return isadmin
      */
-    public boolean isAdmin() {
-        return isAdmin;
+    public boolean isIsadmin() {
+        return isadmin;
     }
 
     /**
-     * @param isAdmin 要设置的 isAdmin
+     * @param isAdmin 要设置的 isadmin
      */
-    public void setAdmin(boolean isAdmin) {
-        this.isAdmin = isAdmin;
+    public void setIsadmin(boolean isAdmin) {
+        this.isadmin = isAdmin;
     }
 }

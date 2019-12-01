@@ -18,11 +18,14 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
         String username = null;
         String password = null;
 
-        if (request.getSession().getAttribute("username") != null) {
+        //登录成功则放行
+        if (request.getSession().getAttribute("tbUserInfo") != null) {
             if ("/".equals(request.getRequestURI()))
                 request.getRequestDispatcher("/toDashboard").forward(request, response);//请求转发
             return true;
         }
+
+        //获取用户名、密码cookie
         Cookie[] cookies = request.getCookies();
         if (cookies != null && cookies.length != 0) {
             //获取登录cookie
@@ -34,16 +37,16 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
                 }
             }
         }
+
+        //没有用户名、密码cookie则转向登录页面
         if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
             if (!"/".equals(request.getRequestURI()))
                 request.setAttribute("permission", "请先登录系统");
             request.getRequestDispatcher("/index").forward(request, response);//请求转发
             return false;
         }
-        if (loginService.login(username, password)) {//验证cookie
-            boolean IsAdmin = loginService.isAdmin(username);
-            request.getSession().setAttribute("username", username);
-            request.getSession().setAttribute("isAdmin", IsAdmin);
+        if (loginService.login(username, password)) {//有用户名、密码cookie则验证cookie
+            request.getSession().setAttribute("tbUserInfo", loginService.tbUserInfo);
             if ("/".equals(request.getRequestURI()))
                 request.getRequestDispatcher("/dashboard").forward(request, response);//请求转发
             return true;

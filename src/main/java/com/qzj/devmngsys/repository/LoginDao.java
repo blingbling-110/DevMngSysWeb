@@ -1,7 +1,9 @@
 package com.qzj.devmngsys.repository;
 
+import com.qzj.devmngsys.entities.TbUserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -10,18 +12,33 @@ public class LoginDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    /**
+     * 根据用户名查询密码
+     * @param username 用户名
+     * @return 密码
+     */
     public String getPassword(String username) {
-        String sql = "select pwd from tb_userinfo where userid=\"" + username + "\"";
+        String sql = "select pwd from tb_userinfo where userid=?";
         try {
-            String pwd = jdbcTemplate.queryForObject(sql, String.class);
+            String pwd = jdbcTemplate.queryForObject(sql, String.class, username);
             return pwd;
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
     }
 
-    public boolean isAdmin(String username) {
-        String sql = "select isadmin from tb_userinfo where userid=\"" + username + "\"";
-        return jdbcTemplate.queryForObject(sql, boolean.class);
+    /**
+     * 根据用户名查询用户信息
+     * @param username 用户名
+     * @return 用户信息
+     */
+    public TbUserInfo getUserInfo(String username) {
+        String sql = "select * from tb_userinfo where userid=?";
+        try {
+            TbUserInfo tbUserInfo = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(TbUserInfo.class), username);
+            return tbUserInfo;
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 }
