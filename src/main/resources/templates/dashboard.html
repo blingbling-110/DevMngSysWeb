@@ -51,8 +51,8 @@
                         <td th:text="${myDevInfoEntry.getValue().getReq().isEmpty()}?
                         null:${myDevInfoEntry.getKey()}"></td>
                         <td th:unless="${myDevInfoEntry.getValue().getReq().isEmpty()}">
-                            <button class="btn btn-sm btn-primary" th:text="#{dashboard.agree}"></button>
-                            <button class="btn btn-sm btn-danger" th:text="#{dashboard.disagree}"></button>
+                            <a class="btn btn-sm btn-primary" th:text="#{dashboard.agree}" th:href="@{/agree}"></a>
+                            <a class="btn btn-sm btn-danger" th:text="#{dashboard.disagree}"></a>
                         </td>
                         <td th:if="${myDevInfoEntry.getValue().getReq().isEmpty()}"></td>
                     </tr>

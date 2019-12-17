@@ -27,4 +27,10 @@ public class DashboardController {
         ModelAndView modelAndView = new ModelAndView("redirect:dashboard");
         return localeService.addLang(modelAndView, language);
     }
+
+    @RequestMapping("/agree")
+    public ModelAndView agree(@RequestParam(value = "lang", required = false) String language) {
+        ModelAndView modelAndView = new ModelAndView("redirect:dashboard");
+        return localeService.addLang(modelAndView, language);
+    }
 }
