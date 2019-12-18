@@ -1,6 +1,7 @@
 package com.qzj.devmngsys.controller;
 
 import com.qzj.devmngsys.entities.TbUserInfo;
+import com.qzj.devmngsys.service.CommonService;
 import com.qzj.devmngsys.service.DashboardService;
 import com.qzj.devmngsys.service.LocaleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ public class DashboardController {
     @Autowired
     private DashboardService dashboardService;
 
+    @Autowired
+    private CommonService commonService;
+
     @RequestMapping("/toDashboard")
     public ModelAndView dashboard(@RequestParam(value = "lang", required = false) String language,
                                   HttpSession httpSession){
@@ -29,7 +33,10 @@ public class DashboardController {
     }
 
     @RequestMapping("/agree")
-    public ModelAndView agree(@RequestParam(value = "lang", required = false) String language) {
+    public ModelAndView agree(@RequestParam(value = "lang", required = false) String language,
+                              @RequestParam(value = "devId") String devId,
+                              @RequestParam(value = "reqerId") String reqerId) {
+        commonService.borrow(devId, reqerId, "设备转移");
         ModelAndView modelAndView = new ModelAndView("redirect:dashboard");
         return localeService.addLang(modelAndView, language);
     }
