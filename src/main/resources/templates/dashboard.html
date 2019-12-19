@@ -49,16 +49,27 @@
                         <td th:text="${myDevInfoEntry.getValue().getRemark()}"></td>
                         <td th:text="${myDevInfoEntry.getValue().getReq()}"></td>
                         <td th:text="${myDevInfoEntry.getValue().getReq().isEmpty()}?
-                        null:${myDevInfoEntry.getKey()}"></td>
+                        null:${myDevInfoEntry.getKey().split('_')[0]}"></td>
                         <td th:unless="${myDevInfoEntry.getValue().getReq().isEmpty()}">
-                            <a class="btn btn-sm btn-primary" th:text="#{dashboard.agree}"
+                            <a class="btn btn-sm btn-primary" th:text="#{dashboard.agree}" onclick="agree()"
                                th:href="@{/agree(devId=${myDevInfoEntry.getValue().getId()}, reqerId=${myDevInfoEntry.getValue().getReq()})}"></a>
-                            <a class="btn btn-sm btn-danger" th:text="#{dashboard.disagree}"></a>
+                            <a class="btn btn-sm btn-danger" th:text="#{dashboard.disagree}" onclick="disagree()"
+                               th:href="@{/disagree(devId=${myDevInfoEntry.getValue().getId()})}"></a>
                         </td>
                         <td th:if="${myDevInfoEntry.getValue().getReq().isEmpty()}"></td>
                     </tr>
                     </tbody>
                 </table>
+                <script>function agree() {
+                    var res= "${session.agreeRes}";
+                    if (res)
+                        alert("设备已成功转移")
+                    else
+                        alert("设备转移失败")
+                }</script>
+                <script>function disagree() {
+                    alert("已拒绝借用请求")
+                }</script>
             </div>
 
             <div th:replace="common::footer"></div>

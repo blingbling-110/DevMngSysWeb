@@ -21,7 +21,7 @@ public class SignOutController {
     @RequestMapping("/signOut")
     public ModelAndView signOut(@RequestParam("lang") String language,
                                 HttpServletRequest request,
-                                HttpServletResponse response){
+                                HttpServletResponse response) {
         HttpSession httpSession = request.getSession(false);//防止创建会话
         httpSession.removeAttribute("username");
         httpSession.removeAttribute("isAdmin");

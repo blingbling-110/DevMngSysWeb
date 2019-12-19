@@ -7,8 +7,9 @@ import org.springframework.web.servlet.ModelAndView;
 public class LocaleService {
     /**
      * 为模型视图对象添加区域信息参数
+     *
      * @param modelAndView 模型视图对象
-     * @param language 区域信息参数
+     * @param language     区域信息参数
      * @return 添加区域信息参数后的模型视图对象
      */
     public ModelAndView addLang(ModelAndView modelAndView, String language) {

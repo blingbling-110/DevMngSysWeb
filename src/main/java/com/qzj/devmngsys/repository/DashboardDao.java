@@ -16,16 +16,18 @@ public class DashboardDao {
 
     /**
      * 根据工号查询其借用的设备信息
+     *
      * @param id 查询人工号
      * @return 该查询人所借用设备信息的列表
      */
     public List<TbDevInfo> getMyDevInfo(Integer id) {
         String sql = "select * from tb_devinfo where status=?";
-        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(TbDevInfo.class), id.toString());
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(TbDevInfo.class), "工号：" + id.toString());
     }
 
     /**
      * 根据工号查询人员信息
+     *
      * @param id 员工工号
      * @return 员工信息
      */

@@ -14,6 +14,7 @@ public class LoginService {
 
     /**
      * 用户登录
+     *
      * @param username 用户名
      * @param password 密码
      * @return 成功与否
@@ -23,8 +24,7 @@ public class LoginService {
         if (password.equals(pwd)) {
             tbUserInfo = loginDao.getUserInfo(username);
             return true;
-        }
-        else
+        } else
             return false;
     }
 }

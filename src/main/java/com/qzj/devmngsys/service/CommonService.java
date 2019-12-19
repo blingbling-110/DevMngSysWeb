@@ -14,7 +14,15 @@ public class CommonService {
     @Autowired
     private CommonDao commonDao;
 
-    public void borrow(String devId, String reqerId, String remark){
+    /**
+     * 借用设备处理函数，包括增加借用信息和清空借用请求
+     *
+     * @param devId   设备编号
+     * @param brwerId 借用人工号
+     * @param remark  备注
+     * @return 借用成功与否
+     */
+    public boolean borrow(String devId, String brwerId, String remark) {
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat(
                 "yyyyMMdd");
@@ -34,10 +42,20 @@ public class CommonService {
         TbBrw brw = new TbBrw();//	封装待增加借用单的对象
         brw.setId(brwId.trim());
         brw.setDevId(devId);
-        brw.setBrwerId(Integer.parseInt(reqerId));
+        brw.setBrwerId(Integer.parseInt(brwerId));
         brw.setDate(dateStr);
-        brw.setRemark("设备转移");
+        brw.setRemark(remark);
         boolean res = commonDao.insertTbBrw(brw);
-        boolean isClear = commonDao.sendReq(devId, "");
+        commonDao.sendReq(devId, "");
+        return res;
+    }
+
+    /**
+     * 拒绝设备请求
+     *
+     * @param devId 设备编号
+     */
+    public void reject(String devId) {
+        commonDao.sendReq(devId, "");
     }
 }

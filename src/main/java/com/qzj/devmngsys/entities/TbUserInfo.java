@@ -1,58 +1,58 @@
 package com.qzj.devmngsys.entities;
 
 /**
- * 	人员信息公共类：用于封装tb_userinfo数据表
- * @author qinzijun
+ * 人员信息公共类：用于封装tb_userinfo数据表
  *
+ * @author qinzijun
  */
 public class TbUserInfo {
     /**
-     * 	工号
+     * 工号
      */
     private Integer id;
 
     /**
-     * 	姓名
+     * 姓名
      */
     private String name;
 
     /**
-     * 	用户名
+     * 用户名
      */
     private String userid;
 
     /**
-     * 	密码
+     * 密码
      */
     private String pwd;
 
     /**
-     * 	职务
+     * 职务
      */
     private String pos;
 
     /**
-     * 	部门
+     * 部门
      */
     private String dep;
 
     /**
-     * 	邮箱
+     * 邮箱
      */
     private String email;
 
     /**
-     * 	电话
+     * 电话
      */
     private String tel;
 
     /**
-     * 	备注
+     * 备注
      */
     private String remark;
 
     /**
-     * 	是否拥有管理权限
+     * 是否拥有管理权限
      */
     private boolean isadmin;
 

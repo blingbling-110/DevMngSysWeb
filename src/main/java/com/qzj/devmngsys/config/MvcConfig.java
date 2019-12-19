@@ -23,7 +23,7 @@ public class MvcConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public LoginHandlerInterceptor loginHandlerInterceptor(){
+    public LoginHandlerInterceptor loginHandlerInterceptor() {
         return new LoginHandlerInterceptor();
     }
 

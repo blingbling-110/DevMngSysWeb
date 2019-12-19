@@ -25,8 +25,8 @@ public class DashboardController {
 
     @RequestMapping("/toDashboard")
     public ModelAndView dashboard(@RequestParam(value = "lang", required = false) String language,
-                                  HttpSession httpSession){
-        TbUserInfo tbUserInfo = (TbUserInfo)httpSession.getAttribute("tbUserInfo");
+                                  HttpSession httpSession) {
+        TbUserInfo tbUserInfo = (TbUserInfo) httpSession.getAttribute("tbUserInfo");
         httpSession.setAttribute("myDevInfo", dashboardService.getMyDev(tbUserInfo.getId()));
         ModelAndView modelAndView = new ModelAndView("redirect:dashboard");
         return localeService.addLang(modelAndView, language);
@@ -35,9 +35,18 @@ public class DashboardController {
     @RequestMapping("/agree")
     public ModelAndView agree(@RequestParam(value = "lang", required = false) String language,
                               @RequestParam(value = "devId") String devId,
-                              @RequestParam(value = "reqerId") String reqerId) {
-        commonService.borrow(devId, reqerId, "设备转移");
-        ModelAndView modelAndView = new ModelAndView("redirect:dashboard");
+                              @RequestParam(value = "reqerId") String reqerId,
+                              HttpSession httpSession) {
+        httpSession.setAttribute("agreeRes", commonService.borrow(devId, reqerId, "设备转移"));
+        ModelAndView modelAndView = new ModelAndView("redirect:toDashboard");
+        return localeService.addLang(modelAndView, language);
+    }
+
+    @RequestMapping("/disagree")
+    public ModelAndView disagree(@RequestParam(value = "lang", required = false) String language,
+                                 @RequestParam(value = "devId") String devId) {
+        commonService.reject(devId);
+        ModelAndView modelAndView = new ModelAndView("redirect:toDashboard");
         return localeService.addLang(modelAndView, language);
     }
 }
