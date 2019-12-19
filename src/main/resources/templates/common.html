@@ -31,17 +31,17 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a th:class="${page} == 'devices' ? 'nav-link active' : 'nav-link'"
+                <a th:class="${page} == 'device' ? 'nav-link active' : 'nav-link'"
                    th:href="@{/devices(lang=${param.lang})}">
                     <img th:src="@{/asserts/img/devices.png}" alt="devices.png" class="feather feather-file"/>
-                    [[#{common.devices}]] <span class="sr-only" th:if="${page} == 'devices'">(current)</span>
+                    [[#{common.devices}]] <span class="sr-only" th:if="${page} == 'device'">(current)</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a th:class="${page} == 'users' ? 'nav-link active' : 'nav-link'"
+                <a th:class="${page} == 'user' ? 'nav-link active' : 'nav-link'"
                    th:href="@{/users(lang=${param.lang})}">
                     <img th:src="@{/asserts/img/users.png}" alt="users.png" class="feather feather-file"/>
-                    [[#{common.users}]] <span class="sr-only" th:if="${page} == 'users'">(current)</span>
+                    [[#{common.users}]] <span class="sr-only" th:if="${page} == 'user'">(current)</span>
                 </a>
             </li>
             <li class="nav-item" th:if="${session.tbUserInfo.isIsadmin()}">
