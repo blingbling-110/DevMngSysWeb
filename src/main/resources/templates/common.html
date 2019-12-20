@@ -32,14 +32,14 @@
             </li>
             <li class="nav-item">
                 <a th:class="${page} == 'device' ? 'nav-link active' : 'nav-link'"
-                   th:href="@{/devices(lang=${param.lang})}">
+                   th:href="@{/device(lang=${param.lang})}">
                     <img th:src="@{/asserts/img/devices.png}" alt="devices.png" class="feather feather-file"/>
                     [[#{common.devices}]] <span class="sr-only" th:if="${page} == 'device'">(current)</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a th:class="${page} == 'user' ? 'nav-link active' : 'nav-link'"
-                   th:href="@{/users(lang=${param.lang})}">
+                   th:href="@{/user(lang=${param.lang})}">
                     <img th:src="@{/asserts/img/users.png}" alt="users.png" class="feather feather-file"/>
                     [[#{common.users}]] <span class="sr-only" th:if="${page} == 'user'">(current)</span>
                 </a>

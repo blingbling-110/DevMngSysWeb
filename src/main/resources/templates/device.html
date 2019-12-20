@@ -44,21 +44,15 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="eachDev: ${session.DevInfo}">
-                        <td th:text="${eachDev.getId()}"></td>
-                        <td th:text="${eachDev.getName()}"></td>
-                        <td th:text="${eachDev.getDes()}"></td>
-                        <td th:text="${eachDev.getRemark()}"></td>
-                        <td th:text="${eachDev.getReq()}"></td>
-                        <td th:text="${eachDev.getReq().isEmpty()}?
-                        null:${eachDev.getKey().split('_')[0]}"></td>
-                        <td th:unless="${eachDev.getReq().isEmpty()}">
-                            <a class="btn btn-sm btn-primary" th:text="#{dashboard.agree}" onclick="agree()"
-                               th:href="@{/agree(devId=${eachDev.getId()}, reqerId=${eachDev.getReq()})}"></a>
-                            <a class="btn btn-sm btn-danger" th:text="#{dashboard.disagree}" onclick="disagree()"
-                               th:href="@{/disagree(devId=${eachDev.getId()})}"></a>
-                        </td>
-                        <td th:if="${eachDev.getReq().isEmpty()}"></td>
+                    <tr th:each="devAndUser: ${session.DevInfo}">
+                        <td th:text="${devAndUser.get(0).getId()}"></td>
+                        <td th:text="${devAndUser.get(0).getName()}"></td>
+                        <td th:text="${devAndUser.get(0).getStatus()}"></td>
+                        <td th:text="${devAndUser.get(1).getName()}"></td>
+                        <td th:text="${devAndUser.get(1).getTel()}"></td>
+                        <td th:text="${devAndUser.get(1).getEmail()}"></td>
+                        <td th:text="${devAndUser.get(0).getDes()}"></td>
+                        <td th:text="${devAndUser.get(0).getRemark()}"></td>
                     </tr>
                     </tbody>
                 </table>
