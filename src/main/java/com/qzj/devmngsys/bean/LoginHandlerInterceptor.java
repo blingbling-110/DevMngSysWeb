@@ -48,7 +48,7 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
         if (loginService.login(username, password)) {//有用户名、密码cookie则验证cookie
             request.getSession().setAttribute("tbUserInfo", loginService.tbUserInfo);
             if ("/".equals(request.getRequestURI()))
-                request.getRequestDispatcher("/dashboard").forward(request, response);//请求转发
+                request.getRequestDispatcher("/toDashboard").forward(request, response);//请求转发
             return true;
         }
         request.setAttribute("error", "用户名或密码错误");

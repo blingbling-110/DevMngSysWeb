@@ -6,7 +6,7 @@ import com.qzj.devmngsys.repository.DashboardDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @Service
@@ -16,23 +16,23 @@ public class DashboardService {
 
     /**
      * 获取查询人所借用设备信息的哈希图，
-     * 该哈希图以"请求人姓名_设备编号"为键，设备信息对象为值。
-     * 若无人请求，则以"no_request_设备编号"为键。
+     * 该哈希图以"设备编号_请求人姓名"为键，设备信息对象为值。
+     * 若无人请求，则以"设备编号_no_request"为键。
      *
      * @param id 查询人工号
      * @return 查询人所借用设备信息的哈希图
      */
-    public HashMap<String, TbDevInfo> getMyDev(Integer id) {
-        HashMap<String, TbDevInfo> myDev = new HashMap<>();
+    public LinkedHashMap<String, TbDevInfo> getMyDev(Integer id) {
+        LinkedHashMap<String, TbDevInfo> myDev = new LinkedHashMap<>();
         List<TbDevInfo> myDevInfo = dashboardDao.getMyDevInfo(id);
         if (myDevInfo != null && !myDevInfo.isEmpty()) {
             for (TbDevInfo tbDevInfo : myDevInfo) {
                 String request_id = tbDevInfo.getReq();
                 if (request_id != null && !request_id.isEmpty()) {
                     TbUserInfo tbUserInfo = dashboardDao.getTbUserInfo(Integer.parseInt(request_id));
-                    myDev.put(tbUserInfo.getName() + "_" + tbDevInfo.getId(), tbDevInfo);
+                    myDev.put(tbDevInfo.getId() + "_" + tbUserInfo.getName(), tbDevInfo);
                 } else {
-                    String key = "no_request_" + tbDevInfo.getId();
+                    String key = tbDevInfo.getId() + "_no_request";
                     myDev.put(key, tbDevInfo);
                 }
             }

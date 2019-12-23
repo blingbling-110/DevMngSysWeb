@@ -37,8 +37,8 @@ public class CommonDao {
         String where = "name='" + item.getName() + "'";//	获取item对象的name属性
         if (item.getId() != null)
             where = "id='" + item.getId() + "'";//	获取item对象的id属性
-        String sql = "select * from tb_devinfo where ?";
-        return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(TbDevInfo.class), where);
+        String sql = "select * from tb_devinfo where " + where;
+        return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(TbDevInfo.class));
     }
 
     /**
@@ -51,8 +51,8 @@ public class CommonDao {
         String where = "name='" + item.getName() + "'";
         if (item.getJobNum() != null)
             where = "id=" + item.getJobNum();
-        String sql = "select * from tb_userinfo where ?";
-        return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(TbUserInfo.class), where);
+        String sql = "select * from tb_userinfo where " + where;
+        return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(TbUserInfo.class));
     }
 
     /**
