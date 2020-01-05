@@ -30,4 +30,13 @@ public class DeviceController {
         ModelAndView modelAndView = new ModelAndView("device");
         return localeService.addLang(modelAndView, language);
     }
+
+    @RequestMapping("/request")
+    public ModelAndView request(@RequestParam(value = "lang", required = false) String language,
+                                @RequestParam(value = "devId") String devId,
+                                @RequestParam(value = "reqerId") String reqerId) {
+        deviceService.sendReq(devId, reqerId);
+        ModelAndView modelAndView = new ModelAndView("redirect:device");
+        return localeService.addLang(modelAndView, language);
+    }
 }

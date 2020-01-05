@@ -4,6 +4,7 @@ import com.qzj.devmngsys.entities.Item;
 import com.qzj.devmngsys.entities.TbDevInfo;
 import com.qzj.devmngsys.entities.TbUserInfo;
 import com.qzj.devmngsys.repository.CommonDao;
+import com.qzj.devmngsys.repository.DeviceDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,9 @@ import java.util.List;
 public class DeviceService {
     @Autowired
     private CommonDao commonDao;
+
+    @Autowired
+    private DeviceDao deviceDao;
 
     /**
      * 搜索设备信息
@@ -68,5 +72,9 @@ public class DeviceService {
             }
         }
         return devInfo;
+    }
+
+    public void sendReq(String devId, String reqerId) {
+        deviceDao.sendReq(devId, reqerId);
     }
 }

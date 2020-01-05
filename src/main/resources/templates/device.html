@@ -56,10 +56,17 @@
                         <td th:text="${devAndUser.get(0).getRemark()}"></td>
                         <td>
                             <a class="btn btn-sm btn-success" th:text="#{device.request}"
-                               th:if="${devAndUser.get(0).getReq()} == ''"></a>
+                               th:if="${devAndUser.get(0).getReq()} == ''
+                               and ${devAndUser.get(0).getStatus()} != '库存中'"
+                               th:href="@{/request(devId=${devAndUser.get(0).getId()},
+                               reqerId=${session.tbUserInfo.getId()})}" onclick="request()"></a>
                             <a class="btn btn-sm btn-dark" th:text="#{device.request}"
-                               th:unless="${devAndUser.get(0).getReq()} == ''"
+                               th:if="${devAndUser.get(0).getReq()} != ''
+                               and ${devAndUser.get(0).getStatus()} != '库存中'"
                                style="color: white" onclick="requested()"></a>
+                            <a class="btn btn-sm btn-dark" th:text="#{device.request}"
+                               th:if="${devAndUser.get(0).getStatus()} == '库存中'"
+                               style="color: white" onclick="stock()"></a>
                             <a class="btn btn-sm btn-warning" th:text="#{device.update}"
                                th:if="${session.tbUserInfo.isIsadmin()}"></a>
                             <a class="btn btn-sm btn-danger" th:text="#{device.delete}"
@@ -68,8 +75,16 @@
                     </tr>
                     </tbody>
                 </table>
+                <script>function request() {
+                    alert("\n借用请求发送成功，请联系已借用人进行确认。\n\n" +
+                        "The borrowing request was sent successfully, please contact the borrower for confirmation");
+                }</script>
                 <script>function requested() {
-                    alert("所选设备已被请求\n\nThe selected device has been requested");
+                    alert("\n所选设备已被请求\n\nThe selected device has been requested");
+                }</script>
+                <script>function stock() {
+                    alert("\n所选设备位于库存中，请联系设备管理员\n\n" +
+                        "The selected device is in stock, please contact the device administrator");
                 }</script>
             </div>
 
