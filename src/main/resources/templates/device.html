@@ -72,7 +72,7 @@
                                th:if="${devAndUser.get(0).getStatus()} == '工号：' + ${session.tbUserInfo.getId()}"
                                style="color: white" onclick="mine()"></a>
                             <a class="btn btn-sm btn-warning" th:text="#{device.update}"
-                               th:if="${session.tbUserInfo.isIsadmin()}"></a>
+                               th:if="${session.tbUserInfo.isIsadmin()}" data-toggle="modal" data-target="#update"></a>
                             <a class="btn btn-sm btn-danger" th:text="#{device.delete}"
                                th:if="${session.tbUserInfo.isIsadmin()}"
                                th:href="@{/delete(devId=${devAndUser.get(0).getId()})}" onclick="return del();"></a>
@@ -98,6 +98,42 @@
                 <script>function del() {
                     return confirm("确认要删除该设备？\n\nAre you sure you want to delete the device?");
                 }</script>
+
+                <div class="modal fade" id="update" tabindex="-1" role="dialog" aria-labelledby="update" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="update_title">
+                                    [[#{device.update}]]
+                                </h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                    &times;
+                                </button>
+                            </div>
+                            <form id="form_data" th:action="@{/update}" method="post">
+                                <div class="modal-body">
+                                    <label class="control-label" th:text="#{device.name}"></label>
+                                    <input type="text" name="device_name" class="form-control" autofocus="">
+                                    <br>
+                                    <label class="control-label" th:text="#{device.description}"></label>
+                                    <input type="text" name="device_des" class="form-control">
+                                    <br>
+                                    <label class="control-label" th:text="#{device.remark}"></label>
+                                    <input type="text" name="device_rem" class="form-control">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                                        Close
+                                    </button>
+                                    <button type="submit" class="btn btn-primary" th:text="#{device.update}"
+                                            style="background-color: #f36f20;">
+                                    </button>
+                                </div>
+                            </form>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal -->
+                </div>
+
             </div>
 
             <div th:replace="common::footer"></div>
