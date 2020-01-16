@@ -77,4 +77,8 @@ public class DeviceService {
     public void sendReq(String devId, String reqerId) {
         deviceDao.sendReq(devId, reqerId);
     }
+
+    public void delete(String devId) {
+        deviceDao.delete(devId);
+    }
 }

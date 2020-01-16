@@ -39,4 +39,12 @@ public class DeviceController {
         ModelAndView modelAndView = new ModelAndView("redirect:device");
         return localeService.addLang(modelAndView, language);
     }
+
+    @RequestMapping("/delete")
+    public ModelAndView delete(@RequestParam(value = "lang", required = false) String language,
+                               @RequestParam(value = "devId") String devId) {
+        deviceService.delete(devId);
+        ModelAndView modelAndView = new ModelAndView("redirect:device");
+        return localeService.addLang(modelAndView, language);
+    }
 }

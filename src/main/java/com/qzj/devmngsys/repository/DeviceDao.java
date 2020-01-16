@@ -12,4 +12,8 @@ public class DeviceDao {
     public void sendReq(String devId, String reqerId) {
         jdbcTemplate.update("update tb_devinfo set req=? where id=?", reqerId, devId);
     }
+
+    public void delete(String devId) {
+        jdbcTemplate.update("delete from tb_devinfo where id=?", devId);
+    }
 }

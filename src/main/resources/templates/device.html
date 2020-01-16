@@ -57,7 +57,8 @@
                         <td>
                             <a class="btn btn-sm btn-success" th:text="#{device.request}"
                                th:if="${devAndUser.get(0).getReq()} == ''
-                               and ${devAndUser.get(0).getStatus()} != '库存中'"
+                               and ${devAndUser.get(0).getStatus()} != '库存中'
+                               and ${devAndUser.get(0).getStatus()} != '工号：' + ${session.tbUserInfo.getId()}"
                                th:href="@{/request(devId=${devAndUser.get(0).getId()},
                                reqerId=${session.tbUserInfo.getId()})}" onclick="request()"></a>
                             <a class="btn btn-sm btn-dark" th:text="#{device.request}"
@@ -67,10 +68,14 @@
                             <a class="btn btn-sm btn-dark" th:text="#{device.request}"
                                th:if="${devAndUser.get(0).getStatus()} == '库存中'"
                                style="color: white" onclick="stock()"></a>
+                            <a class="btn btn-sm btn-dark" th:text="#{device.request}"
+                               th:if="${devAndUser.get(0).getStatus()} == '工号：' + ${session.tbUserInfo.getId()}"
+                               style="color: white" onclick="mine()"></a>
                             <a class="btn btn-sm btn-warning" th:text="#{device.update}"
                                th:if="${session.tbUserInfo.isIsadmin()}"></a>
                             <a class="btn btn-sm btn-danger" th:text="#{device.delete}"
-                               th:if="${session.tbUserInfo.isIsadmin()}"></a>
+                               th:if="${session.tbUserInfo.isIsadmin()}"
+                               th:href="@{/delete(devId=${devAndUser.get(0).getId()})}" onclick="return del();"></a>
                         </td>
                     </tr>
                     </tbody>
@@ -85,6 +90,13 @@
                 <script>function stock() {
                     alert("\n所选设备位于库存中，请联系设备管理员\n\n" +
                         "The selected device is in stock, please contact the device administrator");
+                }</script>
+                <script>function mine() {
+                    alert("\n所选设备已被您借用\n\n" +
+                        "The selected device has been borrowed by you");
+                }</script>
+                <script>function del() {
+                    return confirm("确认要删除该设备？\n\nAre you sure you want to delete the device?");
                 }</script>
             </div>
 
