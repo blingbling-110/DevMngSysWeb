@@ -59,7 +59,7 @@
                                th:if="${devAndUser.get(0).getReq()} == ''
                                and ${devAndUser.get(0).getStatus()} != '库存中'
                                and ${devAndUser.get(0).getStatus()} != '工号：' + ${session.tbUserInfo.getId()}"
-                               th:href="@{/request(devId=${devAndUser.get(0).getId()},
+                               th:href="@{/request(lang=${param.lang}, devId=${devAndUser.get(0).getId()},
                                reqerId=${session.tbUserInfo.getId()})}" onclick="request()"></a>
                             <a class="btn btn-sm btn-dark" th:text="#{device.request}"
                                th:if="${devAndUser.get(0).getReq()} != ''
@@ -72,10 +72,16 @@
                                th:if="${devAndUser.get(0).getStatus()} == '工号：' + ${session.tbUserInfo.getId()}"
                                style="color: white" onclick="mine()"></a>
                             <a class="btn btn-sm btn-warning" th:text="#{device.update}"
-                               th:if="${session.tbUserInfo.isIsadmin()}" data-toggle="modal" data-target="#update"></a>
+                               th:if="${session.tbUserInfo.isIsadmin()}"
+                               data-toggle="modal" data-target="#update"
+                               th:onclick="update([[${devAndUser.get(0).getId()}]],
+                               [[${devAndUser.get(0).getName()}]],
+                               [[${devAndUser.get(0).getStatus()}]],
+                               [[${devAndUser.get(0).getDes()}]],
+                               [[${devAndUser.get(0).getRemark()}]])"></a>
                             <a class="btn btn-sm btn-danger" th:text="#{device.delete}"
                                th:if="${session.tbUserInfo.isIsadmin()}"
-                               th:href="@{/delete(devId=${devAndUser.get(0).getId()})}" onclick="return del();"></a>
+                               th:href="@{/delete(lang=${param.lang}, devId=${devAndUser.get(0).getId()})}" onclick="return del();"></a>
                         </td>
                     </tr>
                     </tbody>
@@ -110,16 +116,24 @@
                                     &times;
                                 </button>
                             </div>
-                            <form id="form_data" th:action="@{/update}" method="post">
+                            <form id="form_data" th:action="@{/update(lang=${param.lang})}" method="post">
                                 <div class="modal-body">
+                                    <label class="control-label" th:text="#{device.id}"></label>
+                                    <input type="text" id="update_id" name="update_id" class="form-control"
+                                           readonly="readonly">
+                                    <br>
                                     <label class="control-label" th:text="#{device.name}"></label>
-                                    <input type="text" name="device_name" class="form-control" autofocus="">
+                                    <input type="text" id="update_name" name="update_name" class="form-control">
+                                    <br>
+                                    <label class="control-label" th:text="#{device.status}"></label>
+                                    <input type="text" id="update_status" name="update_status" class="form-control"
+                                           readonly="readonly">
                                     <br>
                                     <label class="control-label" th:text="#{device.description}"></label>
-                                    <input type="text" name="device_des" class="form-control">
+                                    <input type="text" id="update_des" name="update_des" class="form-control">
                                     <br>
                                     <label class="control-label" th:text="#{device.remark}"></label>
-                                    <input type="text" name="device_rem" class="form-control">
+                                    <input type="text" id="update_rem" name="update_rem" class="form-control">
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">
@@ -133,6 +147,19 @@
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal -->
                 </div>
+
+                <script>function update(update_id, update_name, update_status, update_des, update_rem) {
+                    var id = document.getElementById("update_id");//通过Id获取输入框元素
+                    id.value = update_id;
+                    var name = document.getElementById("update_name");
+                    name.value = update_name;
+                    var status = document.getElementById("update_status");
+                    status.value = update_status;
+                    var des = document.getElementById("update_des");
+                    des.value = update_des;
+                    var rem = document.getElementById("update_rem");
+                    rem.value = update_rem;
+                }</script>
 
             </div>
 

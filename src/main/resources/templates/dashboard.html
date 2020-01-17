@@ -53,10 +53,10 @@
                         null:${myDevInfoEntry.getKey().split('_')[1]}"></td>
                         <td th:unless="${myDevInfoEntry.getValue().getReq().isEmpty()}">
                             <a class="btn btn-sm btn-primary" th:text="#{dashboard.agree}" onclick="agree()"
-                               th:href="@{/agree(devId=${myDevInfoEntry.getValue().getId()},
+                               th:href="@{/agree(lang=${param.lang}, devId=${myDevInfoEntry.getValue().getId()},
                                reqerId=${myDevInfoEntry.getValue().getReq()})}"></a>
                             <a class="btn btn-sm btn-danger" th:text="#{dashboard.disagree}" onclick="disagree()"
-                               th:href="@{/disagree(devId=${myDevInfoEntry.getValue().getId()})}"></a>
+                               th:href="@{/disagree(lang=${param.lang}, devId=${myDevInfoEntry.getValue().getId()})}"></a>
                         </td>
                         <td th:text="#{dashboard.no_request}"
                             th:if="${myDevInfoEntry.getValue().getReq().isEmpty()}"></td>

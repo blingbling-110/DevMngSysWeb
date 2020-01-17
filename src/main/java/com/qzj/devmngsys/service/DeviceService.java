@@ -81,4 +81,8 @@ public class DeviceService {
     public void delete(String devId) {
         deviceDao.delete(devId);
     }
+
+    public void update(String devId, String devName, String devDes, String devRem) {
+        deviceDao.update(devId, devName, devDes, devRem);
+    }
 }

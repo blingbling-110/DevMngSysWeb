@@ -13,7 +13,7 @@
 </head>
 
 <body class="text-center">
-<form class="form-signin" th:action="@{/login(lang=${#request.getParameter('lang')})}" method="post"
+<form class="form-signin" th:action="@{/login(lang=${param.lang})}" method="post"
       style="max-width: 430px;">
     <img class="mb-4" th:src="@{/asserts/img/devmngsys.png}" alt="devmngsys.png" width="300" height="214">
     <h1 class="h3 mb-3 font-weight-normal" th:text="#{login.title}">Please sign in</h1>

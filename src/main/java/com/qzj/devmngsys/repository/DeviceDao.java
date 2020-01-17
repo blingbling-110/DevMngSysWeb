@@ -16,4 +16,9 @@ public class DeviceDao {
     public void delete(String devId) {
         jdbcTemplate.update("delete from tb_devinfo where id=?", devId);
     }
+
+    public void update(String devId, String devName, String devDes, String devRem) {
+        jdbcTemplate.update("update tb_devinfo set name=?, des=?, remark=? where id=?",
+                devName, devDes, devRem, devId);
+    }
 }
