@@ -14,6 +14,17 @@
     <!-- Custom styles for this template -->
     <link th:href="@{asserts/css/dashboard.css}" rel="stylesheet">
 
+    <script>
+        var cookies = document.cookie.split(";");
+        for(var i = 0; i < cookies.length; i++)
+        {
+            var cookie = cookies[i].split("=");
+            if (cookie[0].trim() === "msg") {
+                if (cookie[1].trim() === "DevId")
+                    alert("设备编号已存在\n\nDevice ID already exists");
+            }
+        }
+    </script>
 </head>
 
 <body style="height: 100%;">
@@ -25,6 +36,12 @@
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
             <h2 th:text="#{device.title}">Section title</h2>
+            <br>
+            <button class="btn btn-primary" th:text="#{device.add}"
+               th:if="${session.tbUserInfo.isIsadmin()}"
+               style="background-color: #f36f20;color: white;"
+               data-toggle="modal" data-target="#add" th:onclick="add()"></button>
+            <br>
             <br>
             <div class="table-responsive">
                 <p style="text-align: center;font-size: 20px;" th:text="#{device.empty}"
@@ -60,17 +77,24 @@
                                and ${devAndUser.get(0).getStatus()} != '库存中'
                                and ${devAndUser.get(0).getStatus()} != '工号：' + ${session.tbUserInfo.getId()}"
                                th:href="@{/request(lang=${param.lang}, devId=${devAndUser.get(0).getId()},
-                               reqerId=${session.tbUserInfo.getId()})}" onclick="request()"></a>
+                               reqerId=${session.tbUserInfo.getId()})}" onclick="alert(
+                                   '\n借用请求发送成功，请联系已借用人进行确认。\n\n' +
+                                    'The borrowing request was sent successfully, ' +
+                                     'please contact the borrower for confirmation');"></a>
                             <a class="btn btn-sm btn-dark" th:text="#{device.request}"
                                th:if="${devAndUser.get(0).getReq()} != ''
-                               and ${devAndUser.get(0).getStatus()} != '库存中'"
-                               style="color: white" onclick="requested()"></a>
+                               and ${devAndUser.get(0).getStatus()} != '库存中'
+                               and ${devAndUser.get(0).getStatus()} != '工号：' + ${session.tbUserInfo.getId()}"
+                               style="color: white" onclick="alert('' +
+                                '\n所选设备已被请求\n\nThe selected device has been requested');"></a>
                             <a class="btn btn-sm btn-dark" th:text="#{device.request}"
                                th:if="${devAndUser.get(0).getStatus()} == '库存中'"
-                               style="color: white" onclick="stock()"></a>
+                               style="color: white" onclick="alert('\n所选设备位于库存中，请联系设备管理员\n\n' +
+                            'The selected device is in stock, please contact the device administrator');"></a>
                             <a class="btn btn-sm btn-dark" th:text="#{device.request}"
                                th:if="${devAndUser.get(0).getStatus()} == '工号：' + ${session.tbUserInfo.getId()}"
-                               style="color: white" onclick="mine()"></a>
+                               style="color: white" onclick="alert('\n所选设备已被您借用\n\n' +
+                            'The selected device has been borrowed by you');"></a>
                             <a class="btn btn-sm btn-warning" th:text="#{device.update}"
                                th:if="${session.tbUserInfo.isIsadmin()}"
                                data-toggle="modal" data-target="#update"
@@ -81,29 +105,13 @@
                                [[${devAndUser.get(0).getRemark()}]])"></a>
                             <a class="btn btn-sm btn-danger" th:text="#{device.delete}"
                                th:if="${session.tbUserInfo.isIsadmin()}"
-                               th:href="@{/delete(lang=${param.lang}, devId=${devAndUser.get(0).getId()})}" onclick="return del();"></a>
+                               th:href="@{/delete(lang=${param.lang}, devId=${devAndUser.get(0).getId()})}"
+                               onclick="return confirm(
+                                   '确认要删除该设备？\n\nAre you sure you want to delete the device?');"></a>
                         </td>
                     </tr>
                     </tbody>
                 </table>
-                <script>function request() {
-                    alert("\n借用请求发送成功，请联系已借用人进行确认。\n\n" +
-                        "The borrowing request was sent successfully, please contact the borrower for confirmation");
-                }</script>
-                <script>function requested() {
-                    alert("\n所选设备已被请求\n\nThe selected device has been requested");
-                }</script>
-                <script>function stock() {
-                    alert("\n所选设备位于库存中，请联系设备管理员\n\n" +
-                        "The selected device is in stock, please contact the device administrator");
-                }</script>
-                <script>function mine() {
-                    alert("\n所选设备已被您借用\n\n" +
-                        "The selected device has been borrowed by you");
-                }</script>
-                <script>function del() {
-                    return confirm("确认要删除该设备？\n\nAre you sure you want to delete the device?");
-                }</script>
 
                 <div class="modal fade" id="update" tabindex="-1" role="dialog" aria-labelledby="update" aria-hidden="true">
                     <div class="modal-dialog">
@@ -116,14 +124,15 @@
                                     &times;
                                 </button>
                             </div>
-                            <form id="form_data" th:action="@{/update(lang=${param.lang})}" method="post">
+                            <form id="update_data" th:action="@{/update(lang=${param.lang})}" method="post">
                                 <div class="modal-body">
                                     <label class="control-label" th:text="#{device.id}"></label>
                                     <input type="text" id="update_id" name="update_id" class="form-control"
                                            readonly="readonly">
                                     <br>
                                     <label class="control-label" th:text="#{device.name}"></label>
-                                    <input type="text" id="update_name" name="update_name" class="form-control">
+                                    <input type="text" id="update_name" name="update_name" class="form-control"
+                                           required="">
                                     <br>
                                     <label class="control-label" th:text="#{device.status}"></label>
                                     <input type="text" id="update_status" name="update_status" class="form-control"
@@ -160,6 +169,48 @@
                     var rem = document.getElementById("update_rem");
                     rem.value = update_rem;
                 }</script>
+
+                <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="add_title">
+                                    [[#{device.add}]]
+                                </h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                    &times;
+                                </button>
+                            </div>
+                            <form id="add_data" th:action="@{/add(lang=${param.lang})}" method="post">
+                                <div class="modal-body">
+                                    <label class="control-label" th:text="#{device.id}"></label>
+                                    <input type="text" id="add_id" name="add_id" class="form-control" required="">
+                                    <br>
+                                    <label class="control-label" th:text="#{device.name}"></label>
+                                    <input type="text" id="add_name" name="add_name" class="form-control" required="">
+                                    <br>
+                                    <label class="control-label" th:text="#{device.status}"></label>
+                                    <input type="text" id="add_status" name="add_status" class="form-control"
+                                           required="">
+                                    <br>
+                                    <label class="control-label" th:text="#{device.description}"></label>
+                                    <input type="text" id="add_des" name="add_des" class="form-control">
+                                    <br>
+                                    <label class="control-label" th:text="#{device.remark}"></label>
+                                    <input type="text" id="add_rem" name="add_rem" class="form-control">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                                        Close
+                                    </button>
+                                    <button type="submit" class="btn btn-primary" th:text="#{device.add}"
+                                            style="background-color: #f36f20;">
+                                    </button>
+                                </div>
+                            </form>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal -->
+                </div>
 
             </div>
 

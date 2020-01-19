@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -56,6 +59,26 @@ public class DeviceController {
                                @RequestParam(value = "update_rem") String devRem) {
         deviceService.update(devId, devName, devDes, devRem);
         ModelAndView modelAndView = new ModelAndView("redirect:device");
+        return localeService.addLang(modelAndView, language);
+    }
+
+    @RequestMapping("/add")
+    public ModelAndView add(@RequestParam(value = "lang", required = false) String language,
+                            @RequestParam(value = "add_id") String devId,
+                            @RequestParam(value = "add_name") String devName,
+                            @RequestParam(value = "add_status") String devSta,
+                            @RequestParam(value = "add_des") String devDes,
+                            @RequestParam(value = "add_rem") String devRem,
+                            HttpServletRequest request,
+                            HttpServletResponse response) {
+        int result = deviceService.add(devId, devName, devSta, devDes, devRem);
+        ModelAndView modelAndView = new ModelAndView("redirect:device");
+        if (result == -1) {
+            Cookie cookie = new Cookie("msg", "DevId");
+            cookie.setMaxAge(5);
+            cookie.setPath(request.getContextPath());
+            response.addCookie(cookie);
+        }
         return localeService.addLang(modelAndView, language);
     }
 }

@@ -14,6 +14,20 @@
     <!-- Custom styles for this template -->
     <link th:href="@{asserts/css/dashboard.css}" rel="stylesheet">
 
+    <script>
+        var cookies = document.cookie.split(";");
+        for(var i = 0; i < cookies.length; i++)
+        {
+            var cookie = cookies[i].split("=");
+            if (cookie[0].trim() === "agreeRes") {
+                if (cookie[1].trim() === "true")
+                    alert("\n设备已成功转移\n\nDevice successfully transferred");
+                else
+                    alert("\n设备转移失败\n\nDevice transfer failed");
+                break;
+            }
+        }
+    </script>
 </head>
 
 <body style="height: 100%;">
@@ -52,27 +66,19 @@
                         <td th:text="${myDevInfoEntry.getValue().getReq().isEmpty()}?
                         null:${myDevInfoEntry.getKey().split('_')[1]}"></td>
                         <td th:unless="${myDevInfoEntry.getValue().getReq().isEmpty()}">
-                            <a class="btn btn-sm btn-primary" th:text="#{dashboard.agree}" onclick="agree()"
+                            <a class="btn btn-sm btn-primary" th:text="#{dashboard.agree}"
                                th:href="@{/agree(lang=${param.lang}, devId=${myDevInfoEntry.getValue().getId()},
                                reqerId=${myDevInfoEntry.getValue().getReq()})}"></a>
-                            <a class="btn btn-sm btn-danger" th:text="#{dashboard.disagree}" onclick="disagree()"
-                               th:href="@{/disagree(lang=${param.lang}, devId=${myDevInfoEntry.getValue().getId()})}"></a>
+                            <a class="btn btn-sm btn-danger" th:text="#{dashboard.disagree}"
+                               onclick="alert('\n已拒绝借用请求\n\nBorrowing request rejected');"
+                               th:href="@{/disagree(lang=${param.lang},
+                               devId=${myDevInfoEntry.getValue().getId()})}"></a>
                         </td>
                         <td th:text="#{dashboard.no_request}"
                             th:if="${myDevInfoEntry.getValue().getReq().isEmpty()}"></td>
                     </tr>
                     </tbody>
                 </table>
-                <script>function agree() {
-                    var res = "${session.agreeRes}";
-                    if (res)
-                        alert("\n设备已成功转移\n\nDevice successfully transferred");
-                    else
-                        alert("\n设备转移失败\n\nDevice transfer failed");
-                }</script>
-                <script>function disagree() {
-                    alert("\n已拒绝借用请求\n\nBorrowing request rejected");
-                }</script>
             </div>
 
             <div th:replace="common::footer"></div>

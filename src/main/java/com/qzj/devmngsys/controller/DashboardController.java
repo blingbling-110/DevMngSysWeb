@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -36,8 +39,13 @@ public class DashboardController {
     public ModelAndView agree(@RequestParam(value = "lang", required = false) String language,
                               @RequestParam(value = "devId") String devId,
                               @RequestParam(value = "reqerId") String reqerId,
-                              HttpSession httpSession) {
-        httpSession.setAttribute("agreeRes", commonService.borrow(devId, reqerId, "设备转移"));
+                              HttpServletRequest request,
+                              HttpServletResponse response) {
+        Cookie cookie = new Cookie("agreeRes",
+                String.valueOf(commonService.borrow(devId, reqerId, "设备转移")));
+        cookie.setMaxAge(5);
+        cookie.setPath(request.getContextPath());
+        response.addCookie(cookie);
         ModelAndView modelAndView = new ModelAndView("redirect:toDashboard");
         return localeService.addLang(modelAndView, language);
     }

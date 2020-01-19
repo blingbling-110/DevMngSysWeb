@@ -83,6 +83,30 @@ public class DeviceService {
     }
 
     public void update(String devId, String devName, String devDes, String devRem) {
-        deviceDao.update(devId, devName, devDes, devRem);
+        TbDevInfo devInfo = new TbDevInfo();
+        devInfo.setId(devId);
+        devInfo.setName(devName.trim());
+        devInfo.setDes(devDes.trim());
+        devInfo.setRemark(devRem.trim());
+        deviceDao.update(devInfo);
+    }
+
+    public int add(String devId, String devName, String devSta, String devDes, String devRem) {
+        List<TbDevInfo> allDevInfo = commonDao.searchDevInfo("", "", "", "", "");
+        for(int i = 0; i < allDevInfo.size(); i++) {
+            String eachId = allDevInfo.get(i).getId();
+            if(devId.equals(eachId)) {
+                //设备编号已存在
+                return -1;
+            }
+        }
+        TbDevInfo devInfo = new TbDevInfo();
+        devInfo.setId(devId);
+        devInfo.setName(devName.trim());
+        devInfo.setStatus(devSta.trim());
+        devInfo.setDes(devDes.trim());
+        devInfo.setRemark(devRem.trim());
+        deviceDao.add(devInfo);
+        return 0;
     }
 }
