@@ -21,9 +21,7 @@
     <h1 class="h3 mb-3 font-weight-normal" th:text="#{login.info}">Please sign in</h1>
     <p style="color: red;" th:text="#{login.error}" th:unless="${#strings.isEmpty(error)}"></p>
     <p style="color: red;" th:text="#{login.permission}" th:unless="${#strings.isEmpty(permission)}"></p>
-    <label class="sr-only" th:text="#{login.username}">Username</label>
     <input type="text" name="username" class="form-control" th:placeholder="#{login.username}" required="" autofocus="">
-    <label class="sr-only" th:text="#{login.password}">Password</label>
     <input type="password" name="password" class="form-control" th:placeholder="#{login.password}" required="">
     <div class="checkbox mb-3">
         <label>

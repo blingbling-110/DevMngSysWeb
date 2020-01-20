@@ -21,9 +21,9 @@
             var cookie = cookies[i].split("=");
             if (cookie[0].trim() === "msg") {
                 if (cookie[1].trim() === "DevId")
-                    alert("设备编号已存在\n\nDevice ID already exists");
+                    alert("\n设备编号已存在\n\nDevice ID already exists");
                 if (cookie[1].trim() === "DevSta")
-                    alert("请正确填写设备状态\n\nPlease fill in the device status correctly");
+                    alert("\n请正确填写设备状态\n\nPlease fill in the device status correctly");
             }
         }
     </script>
@@ -43,6 +43,20 @@
                th:if="${session.tbUserInfo.isIsadmin()}"
                style="background-color: #f36f20;color: white;"
                data-toggle="modal" data-target="#add" th:onclick="add()"></button>
+            <br>
+            <br>
+            <label th:text="'&nbsp;'+#{device.id}+'&nbsp;:&nbsp;'" for="search_id"></label>
+            <input type="text" id="search_id" name="search_id">
+            <label th:text="'&nbsp;'+#{device.name}+'&nbsp;:&nbsp;'" for="search_name"></label>
+            <input type="text" id="search_name" name="search_name">
+            <label th:text="'&nbsp;'+#{device.status}+'&nbsp;:&nbsp;'" for="search_status"></label>
+            <input type="text" id="search_status" name="search_status">
+            <label th:text="'&nbsp;'+#{device.description}+'&nbsp;:&nbsp;'" for="search_des"></label>
+            <input type="text" id="search_des" name="search_des">
+            <label th:text="'&nbsp;'+#{device.remark}+'&nbsp;:&nbsp;'" for="search_rem"></label>
+            <input type="text" id="search_rem" name="search_rem">
+            <button class="btn btn-primary" th:text="#{device.search}"
+                    style="background-color: #f36f20;color: white;" th:onclick=""></button>
             <br>
             <br>
             <div class="table-responsive">
@@ -109,7 +123,7 @@
                                th:if="${session.tbUserInfo.isIsadmin()}"
                                th:href="@{/delete(lang=${param.lang}, devId=${devAndUser.get(0).getId()})}"
                                onclick="return confirm(
-                                   '确认要删除该设备？\n\nAre you sure you want to delete the device?');"></a>
+                                   '\n确认要删除该设备？\n\nAre you sure you want to delete the device?');"></a>
                         </td>
                     </tr>
                     </tbody>
@@ -128,22 +142,27 @@
                             </div>
                             <form id="update_data" th:action="@{/update(lang=${param.lang})}" method="post">
                                 <div class="modal-body">
-                                    <label class="control-label" th:text="#{device.id}"></label>
+                                    <label class="control-label" th:text="#{device.id}+'&nbsp;:&nbsp;'"
+                                           for="update_id"></label>
                                     <input type="text" id="update_id" name="update_id" class="form-control"
                                            readonly="readonly">
                                     <br>
-                                    <label class="control-label" th:text="#{device.name}"></label>
+                                    <label class="control-label" th:text="#{device.name}+'&nbsp;:&nbsp;'"
+                                           for="update_name"></label>
                                     <input type="text" id="update_name" name="update_name" class="form-control"
                                            required="">
                                     <br>
-                                    <label class="control-label" th:text="#{device.status}"></label>
+                                    <label class="control-label" th:text="#{device.status}+'&nbsp;:&nbsp;'"
+                                           for="update_status"></label>
                                     <input type="text" id="update_status" name="update_status" class="form-control"
                                            readonly="readonly">
                                     <br>
-                                    <label class="control-label" th:text="#{device.description}"></label>
+                                    <label class="control-label" th:text="#{device.description}+'&nbsp;:&nbsp;'"
+                                           for="update_des"></label>
                                     <input type="text" id="update_des" name="update_des" class="form-control">
                                     <br>
-                                    <label class="control-label" th:text="#{device.remark}"></label>
+                                    <label class="control-label" th:text="#{device.remark}+'&nbsp;:&nbsp;'"
+                                           for="update_rem"></label>
                                     <input type="text" id="update_rem" name="update_rem" class="form-control">
                                 </div>
                                 <div class="modal-footer">
@@ -185,21 +204,25 @@
                             </div>
                             <form id="add_data" th:action="@{/add(lang=${param.lang})}" method="post">
                                 <div class="modal-body">
-                                    <label class="control-label" th:text="#{device.id}"></label>
+                                    <label class="control-label" th:text="#{device.id}+'&nbsp;:&nbsp;'"
+                                           for="add_id"></label>
                                     <input type="text" id="add_id" name="add_id" class="form-control" required="">
                                     <br>
-                                    <label class="control-label" th:text="#{device.name}"></label>
+                                    <label class="control-label" th:text="#{device.name}+'&nbsp;:&nbsp;'"
+                                           for="add_name"></label>
                                     <input type="text" id="add_name" name="add_name" class="form-control" required="">
                                     <br>
-                                    <label class="control-label" th:text="#{device.status}+
-                                    '（请填入&quot;工号：XX&quot;或&quot;库存中&quot;）'"></label>
+                                    <label class="control-label" th:text="#{device.status}+'&nbsp;:&nbsp;'+
+                                    '（请填入&quot;工号：XX&quot;或&quot;库存中&quot;）'" for="add_status"></label>
                                     <input type="text" id="add_status" name="add_status" class="form-control"
                                            required="">
                                     <br>
-                                    <label class="control-label" th:text="#{device.description}"></label>
+                                    <label class="control-label" th:text="#{device.description}+'&nbsp;:&nbsp;'"
+                                           for="add_des"></label>
                                     <input type="text" id="add_des" name="add_des" class="form-control">
                                     <br>
-                                    <label class="control-label" th:text="#{device.remark}"></label>
+                                    <label class="control-label" th:text="#{device.remark}+'&nbsp;:&nbsp;'"
+                                           for="add_rem"></label>
                                     <input type="text" id="add_rem" name="add_rem" class="form-control">
                                 </div>
                                 <div class="modal-footer">
