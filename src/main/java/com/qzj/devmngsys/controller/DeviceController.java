@@ -71,14 +71,21 @@ public class DeviceController {
                             @RequestParam(value = "add_rem") String devRem,
                             HttpServletRequest request,
                             HttpServletResponse response) {
-        int result = deviceService.add(devId, devName, devSta, devDes, devRem);
-        ModelAndView modelAndView = new ModelAndView("redirect:device");
-        if (result == -1) {
-            Cookie cookie = new Cookie("msg", "DevId");
+        if (devSta.startsWith("库存中") || devSta.startsWith("工号：")) {
+            int result = deviceService.add(devId, devName, devSta, devDes, devRem);
+            if (result == -1) {
+                Cookie cookie = new Cookie("msg", "DevId");
+                cookie.setMaxAge(5);
+                cookie.setPath(request.getContextPath());
+                response.addCookie(cookie);
+            }
+        } else {
+            Cookie cookie = new Cookie("msg", "DevSta");
             cookie.setMaxAge(5);
             cookie.setPath(request.getContextPath());
             response.addCookie(cookie);
         }
+        ModelAndView modelAndView = new ModelAndView("redirect:device");
         return localeService.addLang(modelAndView, language);
     }
 }

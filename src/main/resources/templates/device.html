@@ -22,6 +22,8 @@
             if (cookie[0].trim() === "msg") {
                 if (cookie[1].trim() === "DevId")
                     alert("设备编号已存在\n\nDevice ID already exists");
+                if (cookie[1].trim() === "DevSta")
+                    alert("请正确填写设备状态\n\nPlease fill in the device status correctly");
             }
         }
     </script>
@@ -189,7 +191,8 @@
                                     <label class="control-label" th:text="#{device.name}"></label>
                                     <input type="text" id="add_name" name="add_name" class="form-control" required="">
                                     <br>
-                                    <label class="control-label" th:text="#{device.status}"></label>
+                                    <label class="control-label" th:text="#{device.status}+
+                                    '（请填入&quot;工号：XX&quot;或&quot;库存中&quot;）'"></label>
                                     <input type="text" id="add_status" name="add_status" class="form-control"
                                            required="">
                                     <br>
