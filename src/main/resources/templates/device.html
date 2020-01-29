@@ -20,10 +20,14 @@
         {
             var cookie = cookies[i].split("=");
             if (cookie[0].trim() === "msg") {
-                if (cookie[1].trim() === "DevId")
-                    alert("\n设备编号已存在\n\nDevice ID already exists");
-                if (cookie[1].trim() === "DevSta")
-                    alert("\n请正确填写设备状态\n\nPlease fill in the device status correctly");
+                switch (cookie[1].trim()) {
+                    case "DevId":
+                        alert("\n设备编号已存在\n\nDevice ID already exists");
+                        break;
+                    case "DevSta":
+                        alert("\n请正确填写设备状态\n\nPlease fill in the device status correctly");
+                        break;
+                }
             }
         }
     </script>
@@ -45,18 +49,21 @@
                data-toggle="modal" data-target="#add" th:onclick="add()"></button>
             <br>
             <br>
-            <label th:text="'&nbsp;'+#{device.id}+'&nbsp;:&nbsp;'" for="search_id"></label>
-            <input type="text" id="search_id" name="search_id">
-            <label th:text="'&nbsp;'+#{device.name}+'&nbsp;:&nbsp;'" for="search_name"></label>
-            <input type="text" id="search_name" name="search_name">
-            <label th:text="'&nbsp;'+#{device.status}+'&nbsp;:&nbsp;'" for="search_status"></label>
-            <input type="text" id="search_status" name="search_status">
-            <label th:text="'&nbsp;'+#{device.description}+'&nbsp;:&nbsp;'" for="search_des"></label>
-            <input type="text" id="search_des" name="search_des">
-            <label th:text="'&nbsp;'+#{device.remark}+'&nbsp;:&nbsp;'" for="search_rem"></label>
-            <input type="text" id="search_rem" name="search_rem">
-            <button class="btn btn-primary" th:text="#{device.search}"
-                    style="background-color: #f36f20;color: white;" th:onclick=""></button>
+            <form id="search_data" th:action="@{/device(lang=${param.lang})}" method="post">
+                <label th:text="'&nbsp;'+#{device.id}+'&nbsp;:&nbsp;'" for="search_id"></label>
+                <input type="text" id="search_id" name="id" size="20">
+                <label th:text="'&nbsp;'+#{device.name}+'&nbsp;:&nbsp;'" for="search_name"></label>
+                <input type="text" id="search_name" name="name" size="20">
+                <label th:text="'&nbsp;'+#{device.status}+'&nbsp/&nbsp'+#{device.brwerName}+'&nbsp/&nbsp'+
+                #{device.brwerId}+'&nbsp;:&nbsp;'" for="search_status"></label>
+                <input type="text" id="search_status" name="status" size="20">
+                <label th:text="'&nbsp;'+#{device.description}+'&nbsp;:&nbsp;'" for="search_des"></label>
+                <input type="text" id="search_des" name="des" size="40">
+                <label th:text="'&nbsp;'+#{device.remark}+'&nbsp;:&nbsp;'" for="search_rem"></label>
+                <input type="text" id="search_rem" name="remark" size="40">
+                <button type="submit" class="btn btn-primary" th:text="#{device.search}"
+                        style="background-color: #f36f20;color: white;"></button>
+            </form>
             <br>
             <br>
             <div class="table-responsive">
