@@ -4,33 +4,16 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="设备总览">
+    <meta name="description" content="用户信息">
     <meta name="author" content="覃子俊">
 
-    <title th:text="#{device.title}">Dashboard Template for Bootstrap</title>
+    <title th:text="#{user.title}">Dashboard Template for Bootstrap</title>
     <!-- Bootstrap core CSS -->
     <link th:href="@{asserts/css/bootstrap.min.css}" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link th:href="@{asserts/css/dashboard.css}" rel="stylesheet">
 
-    <script>
-        var cookies = document.cookie.split(";");
-        for(var i = 0; i < cookies.length; i++)
-        {
-            var cookie = cookies[i].split("=");
-            if (cookie[0].trim() === "msg") {
-                switch (cookie[1].trim()) {
-                    case "DevId":
-                        alert("\n设备编号已存在\n\nDevice ID already exists");
-                        break;
-                    case "DevSta":
-                        alert("\n请正确填写设备状态\n\nPlease fill in the device status correctly");
-                        break;
-                }
-            }
-        }
-    </script>
 </head>
 
 <body style="height: 100%;">
@@ -38,12 +21,12 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div th:replace="common::sidebar(page='device')"></div>
+        <div th:replace="common::sidebar(page='user')"></div>
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-            <h2 th:text="#{device.title}">Section title</h2>
+            <h2 th:text="#{user.title}">Section title</h2>
             <br>
-            <button class="btn btn-primary" th:text="#{device.add}"
+            <button class="btn btn-primary" th:text="#{user.add}"
                th:if="${session.tbUserInfo.isIsadmin()}"
                style="background-color: #f36f20;color: white;"
                data-toggle="modal" data-target="#add"></button>
