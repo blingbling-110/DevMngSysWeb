@@ -22,11 +22,16 @@ public class UserController {
     public ModelAndView device(@RequestParam(value = "lang", required = false) String language,
                                @RequestParam(value = "id", required = false) String id,
                                @RequestParam(value = "name", required = false) String name,
-                               @RequestParam(value = "status", required = false) String status,
-                               @RequestParam(value = "des", required = false) String des,
+                               @RequestParam(value = "userName", required = false) String userName,
+                               @RequestParam(value = "pos", required = false) String pos,
+                               @RequestParam(value = "dep", required = false) String dep,
+                               @RequestParam(value = "email", required = false) String email,
+                               @RequestParam(value = "tel", required = false) String tel,
                                @RequestParam(value = "remark", required = false) String remark,
+                               @RequestParam(value = "isAdmin", required = false) boolean isAdmin,
                                HttpSession httpSession) {
-        httpSession.setAttribute("UserInfo", userService.searchUserInfo(id, name, status, des, remark));
+        httpSession.setAttribute("UserInfo", userService.searchUserInfo(id, name, userName, pos, dep,
+                email, tel, remark, isAdmin));
         ModelAndView modelAndView = new ModelAndView("user");
         return localeService.addLang(modelAndView, language);
     }

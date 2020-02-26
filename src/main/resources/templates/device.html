@@ -50,18 +50,19 @@
             <br>
             <br>
             <form id="search_data" th:action="@{/device(lang=${param.lang})}" method="post">
-                <label th:text="'&nbsp;'+#{device.id}+'&nbsp;:&nbsp;'" for="search_id"></label>
-                <input type="text" id="search_id" name="id" size="20">
-                <label th:text="'&nbsp;'+#{device.name}+'&nbsp;:&nbsp;'" for="search_name"></label>
-                <input type="text" id="search_name" name="name" size="20">
-                <label th:text="'&nbsp;'+#{device.status}+'&nbsp/&nbsp'+#{device.brwerName}+'&nbsp/&nbsp'+
-                #{device.brwerId}+'&nbsp;:&nbsp;'" for="search_status"></label>
-                <input type="text" id="search_status" name="status" size="20">
-                <label th:text="'&nbsp;'+#{device.description}+'&nbsp;:&nbsp;'" for="search_des"></label>
-                <input type="text" id="search_des" name="des" size="40">
-                <label th:text="'&nbsp;'+#{device.remark}+'&nbsp;:&nbsp;'" for="search_rem"></label>
-                <input type="text" id="search_rem" name="remark" size="40">
-                <button type="submit" class="btn btn-primary" th:text="#{device.search}"
+                <label th:text="#{device.id}+'&nbsp;:'" for="search_id"></label>
+                &nbsp;<input type="text" id="search_id" name="id" size="20">
+                &nbsp;<label th:text="#{device.name}+'&nbsp;:'" for="search_name"></label>
+                &nbsp;<input type="text" id="search_name" name="name" size="40">
+                &nbsp;<label th:text="#{device.status}+'&nbsp/&nbsp'+#{device.brwerName}+'&nbsp/&nbsp'+
+                #{device.brwerId}+'&nbsp;:'" for="search_status"></label>
+                &nbsp;<input type="text" id="search_status" name="status" size="20">
+                <br>
+                <label th:text="#{device.description}+'&nbsp;:'" for="search_des"></label>
+                &nbsp;<input type="text" id="search_des" name="des" size="60">
+                &nbsp;<label th:text="#{device.remark}+'&nbsp;:'" for="search_rem"></label>
+                &nbsp;<input type="text" id="search_rem" name="remark" size="60">
+                &nbsp;<button type="submit" class="btn btn-primary" th:text="#{device.search}"
                         style="background-color: #f36f20;color: white;"></button>
             </form>
             <br>
