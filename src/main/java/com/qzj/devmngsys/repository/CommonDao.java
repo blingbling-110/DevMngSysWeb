@@ -143,7 +143,7 @@ public class CommonDao {
      *
      * @param id        欲搜索的工号
      * @param name      欲搜索的姓名
-     * @param userName  欲搜索的用户名
+     * @param username  欲搜索的用户名
      * @param pos       欲搜索的职位
      * @param dep       欲搜索的部门
      * @param email     欲搜索的邮箱
@@ -152,14 +152,14 @@ public class CommonDao {
      * @param isAdmin   欲搜索的管理员权限值
      * @return  包含返回的人员信息的List集合
      */
-    public List<TbUserInfo> searchUserInfo(String id, String name, String userName, String pos, String dep,
+    public List<TbUserInfo> searchUserInfo(String id, String name, String username, String pos, String dep,
                                           String email, String tel, String remark, boolean isAdmin) {
         if (id == null)
             id = "'%'";
         if (name == null)
             name = "";
-        if (userName == null)
-            userName = "";
+        if (username == null)
+            username = "";
         if (pos == null)
             pos = "";
         if (dep == null)
@@ -171,7 +171,7 @@ public class CommonDao {
         if (remark == null)
             remark = "";
         String sql = "select * from tb_userinfo where id like " + id + " and name like '%" + name + "%' and "
-                + "userid like '%" + userName + "%' and pos like '%" + pos + "%' and dep like '%" + dep
+                + "userid like '%" + username + "%' and pos like '%" + pos + "%' and dep like '%" + dep
                 + "%' and email like '%" + email + "%' and tel like '%" + tel + "%' and remark like '%"
                 + remark + "%' and isadmin like " + isAdmin;
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(TbUserInfo.class));

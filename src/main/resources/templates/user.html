@@ -53,7 +53,7 @@
                 &nbsp;<input type="text" id="search_rem" name="remark" size="40">
                 &nbsp;<input type="checkbox" id="search_isAdmin" name="isAdmin"
                        th:text="'&nbsp;' + #{user.isAdmin}">
-                &nbsp;<button type="submit" class="btn btn-primary" th:text="#{device.search}"
+                &nbsp;<button type="submit" class="btn btn-primary" th:text="#{user.search}"
                         style="background-color: #f36f20;color: white;"></button>
             </form>
             <br>
@@ -74,13 +74,14 @@
                         <th>[[#{user.tel}]]</th>
                         <th>[[#{user.remark}]]</th>
                         <th>[[#{user.isAdmin}]]</th>
+                        <th>[[#{user.operation}]]</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="user: ${session.UserInfo}">
                         <td th:text="${user.getId()}"></td>
                         <td th:text="${user.getName()}"></td>
-                        <td th:text="${user.getUserid()()}"></td>
+                        <td th:text="${user.getUserid()}"></td>
                         <td th:text="${user.getPos()}"></td>
                         <td th:text="${user.getDep()}"></td>
                         <td th:text="${user.getEmail()}"></td>
@@ -88,42 +89,23 @@
                         <td th:text="${user.getRemark()}"></td>
                         <td th:text="${user.isIsadmin()}"></td>
                         <td>
-                            <a class="btn btn-sm btn-success" th:text="#{device.request}"
-                               th:if="${user.getReq()} == ''
-                               and ${user.getStatus()} != '库存中'
-                               and ${user.getStatus()} != '工号：' + ${session.tbUserInfo.getId()}"
-                               th:href="@{/request(lang=${param.lang}, devId=${user.getId()},
-                               reqerId=${session.tbUserInfo.getId()})}" onclick="alert(
-                                   '\n借用请求发送成功，请联系已借用人进行确认。\n\n' +
-                                    'The borrowing request was sent successfully, ' +
-                                     'please contact the borrower for confirmation');"></a>
-                            <a class="btn btn-sm btn-dark" th:text="#{device.request}"
-                               th:if="${user.getReq()} != ''
-                               and ${user.getStatus()} != '库存中'
-                               and ${user.getStatus()} != '工号：' + ${session.tbUserInfo.getId()}"
-                               style="color: white" onclick="alert('' +
-                                '\n所选设备已被请求\n\nThe selected device has been requested');"></a>
-                            <a class="btn btn-sm btn-dark" th:text="#{device.request}"
-                               th:if="${user.getStatus()} == '库存中'"
-                               style="color: white" onclick="alert('\n所选设备位于库存中，请联系设备管理员\n\n' +
-                            'The selected device is in stock, please contact the device administrator');"></a>
-                            <a class="btn btn-sm btn-dark" th:text="#{device.request}"
-                               th:if="${user.getStatus()} == '工号：' + ${session.tbUserInfo.getId()}"
-                               style="color: white" onclick="alert('\n所选设备已被您借用\n\n' +
-                            'The selected device has been borrowed by you');"></a>
-                            <a class="btn btn-sm btn-warning" th:text="#{device.update}"
+                            <a class="btn btn-sm btn-warning" th:text="#{user.update}"
                                th:if="${session.tbUserInfo.isIsadmin()}"
                                data-toggle="modal" data-target="#update"
                                th:onclick="update([[${user.getId()}]],
                                [[${user.getName()}]],
-                               [[${user.getStatus()}]],
-                               [[${user.getDes()}]],
-                               [[${user.getRemark()}]])"></a>
-                            <a class="btn btn-sm btn-danger" th:text="#{device.delete}"
+                               [[${user.getUserid()}]],
+                               [[${user.getPos()}]],
+                               [[${user.getDep()}]],
+                               [[${user.getEmail()}]],
+                               [[${user.getTel()}]],
+                               [[${user.getRemark()}]],
+                               [[${user.isIsadmin()}]])"></a>
+                            <a class="btn btn-sm btn-danger" th:text="#{user.delete}"
                                th:if="${session.tbUserInfo.isIsadmin()}"
-                               th:href="@{/delete(lang=${param.lang}, devId=${user.getId()})}"
+                               th:href="@{/user_delete(lang=${param.lang}, id=${user.getId()})}"
                                onclick="return confirm(
-                                   '\n确认要删除该设备？\n\nAre you sure you want to delete the device?');"></a>
+                                   '\n确认要删除该用户？\n\nAre you sure you want to delete the user?');"></a>
                         </td>
                     </tr>
                     </tbody>
@@ -134,42 +116,58 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h4 class="modal-title" id="update_title">
-                                    [[#{device.update}]]
+                                    [[#{user.update}]]
                                 </h4>
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                                     &times;
                                 </button>
                             </div>
-                            <form id="update_data" th:action="@{/update(lang=${param.lang})}" method="post">
+                            <form id="update_data" th:action="@{/user_update(lang=${param.lang})}" method="post">
                                 <div class="modal-body">
-                                    <label class="control-label" th:text="#{device.id}+'&nbsp;:&nbsp;'"
-                                           for="update_id"></label>
+                                    <label class="control-label" th:text="#{user.id}+'&nbsp;:'" for="update_id"></label>
                                     <input type="text" id="update_id" name="update_id" class="form-control"
-                                           readonly="readonly">
+                                           readonly="">
                                     <br>
-                                    <label class="control-label" th:text="#{device.name}+'&nbsp;:&nbsp;'"
+                                    <label class="control-label" th:text="#{user.name}+'&nbsp;:'"
                                            for="update_name"></label>
                                     <input type="text" id="update_name" name="update_name" class="form-control"
                                            required="">
                                     <br>
-                                    <label class="control-label" th:text="#{device.status}+'&nbsp;:&nbsp;'"
-                                           for="update_status"></label>
-                                    <input type="text" id="update_status" name="update_status" class="form-control"
-                                           readonly="readonly">
+                                    <label class="control-label" th:text="#{user.username}+'&nbsp;:'"
+                                           for="update_username"></label>
+                                    <input type="text" id="update_username" name="update_username" class="form-control"
+                                           required="">
                                     <br>
-                                    <label class="control-label" th:text="#{device.description}+'&nbsp;:&nbsp;'"
-                                           for="update_des"></label>
-                                    <input type="text" id="update_des" name="update_des" class="form-control">
+                                    <label class="control-label" th:text="#{user.pos}+'&nbsp;'"
+                                           for="update_pos"></label>
+                                    <input type="text" id="update_pos" name="update_pos" class="form-control">
                                     <br>
-                                    <label class="control-label" th:text="#{device.remark}+'&nbsp;:&nbsp;'"
+                                    <label class="control-label" th:text="#{user.dep}+'&nbsp;'"
+                                           for="update_dep"></label>
+                                    <input type="text" id="update_dep" name="update_dep" class="form-control">
+                                    <br>
+                                    <label class="control-label" th:text="#{user.email}+'&nbsp;'"
+                                           for="update_email"></label>
+                                    <input type="text" id="update_email" name="update_email" class="form-control"
+                                           required="">
+                                    <br>
+                                    <label class="control-label" th:text="#{user.tel}+'&nbsp;'"
+                                           for="update_tel"></label>
+                                    <input type="text" id="update_tel" name="update_tel" class="form-control"
+                                           required="">
+                                    <br>
+                                    <label class="control-label" th:text="#{user.remark}+'&nbsp;:'"
                                            for="update_rem"></label>
                                     <input type="text" id="update_rem" name="update_rem" class="form-control">
+                                    <br>
+                                    <input type="checkbox" id="update_isAdmin" name="update_isAdmin"
+                                           th:text="'&nbsp;' + #{user.isAdmin}">
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">
                                         Close
                                     </button>
-                                    <button type="submit" class="btn btn-primary" th:text="#{device.update}"
+                                    <button type="submit" class="btn btn-primary" th:text="#{user.update}"
                                             style="background-color: #f36f20;">
                                     </button>
                                 </div>
@@ -178,17 +176,26 @@
                     </div><!-- /.modal -->
                 </div>
 
-                <script>function update(update_id, update_name, update_status, update_des, update_rem) {
+                <script>function update(update_id, update_name, update_username, update_pos, update_dep,
+                                        update_email, update_tel, update_rem, update_isAdmin) {
                     var id = document.getElementById("update_id");//通过Id获取输入框元素
                     id.value = update_id;
                     var name = document.getElementById("update_name");
                     name.value = update_name;
-                    var status = document.getElementById("update_status");
-                    status.value = update_status;
-                    var des = document.getElementById("update_des");
-                    des.value = update_des;
+                    var username = document.getElementById("update_username");
+                    username.value = update_username;
+                    var pos = document.getElementById("update_pos");
+                    pos.value = update_pos;
+                    var dep = document.getElementById("update_dep");
+                    dep.value = update_dep;
+                    var email = document.getElementById("update_email");
+                    email.value = update_email;
+                    var tel = document.getElementById("update_tel");
+                    tel.value = update_tel;
                     var rem = document.getElementById("update_rem");
                     rem.value = update_rem;
+                    var isAdmin = document.getElementById("update_isAdmin");
+                    isAdmin.checked = update_isAdmin;
                 }</script>
 
                 <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
@@ -196,40 +203,54 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h4 class="modal-title" id="add_title">
-                                    [[#{device.add}]]
+                                    [[#{user.add}]]
                                 </h4>
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                                     &times;
                                 </button>
                             </div>
-                            <form id="add_data" th:action="@{/add(lang=${param.lang})}" method="post">
+                            <form id="add_data" th:action="@{/user_add(lang=${param.lang})}" method="post">
                                 <div class="modal-body">
-                                    <label class="control-label" th:text="#{device.id}+'&nbsp;:&nbsp;'"
-                                           for="add_id"></label>
+                                    <label class="control-label" th:text="#{user.id}+'&nbsp;:'" for="add_id"></label>
                                     <input type="text" id="add_id" name="add_id" class="form-control" required="">
                                     <br>
-                                    <label class="control-label" th:text="#{device.name}+'&nbsp;:&nbsp;'"
+                                    <label class="control-label" th:text="#{user.name}+'&nbsp;:'"
                                            for="add_name"></label>
                                     <input type="text" id="add_name" name="add_name" class="form-control" required="">
                                     <br>
-                                    <label class="control-label" th:text="#{device.status}+'&nbsp;:&nbsp;'+
-                                    '（请填入&quot;工号：XX&quot;或&quot;库存中&quot;）'" for="add_status"></label>
-                                    <input type="text" id="add_status" name="add_status" class="form-control"
+                                    <label class="control-label" th:text="#{user.username}+'&nbsp;:'"
+                                           for="add_username"></label>
+                                    <input type="text" id="add_username" name="add_username" class="form-control"
                                            required="">
                                     <br>
-                                    <label class="control-label" th:text="#{device.description}+'&nbsp;:&nbsp;'"
-                                           for="add_des"></label>
-                                    <input type="text" id="add_des" name="add_des" class="form-control">
+                                    <label class="control-label" th:text="#{user.pwd}+'&nbsp;:'" for="add_pwd"></label>
+                                    <input type="password" id="add_pwd" name="add_pwd" class="form-control" required="">
                                     <br>
-                                    <label class="control-label" th:text="#{device.remark}+'&nbsp;:&nbsp;'"
+                                    <label class="control-label" th:text="#{user.pos}+'&nbsp;:'" for="add_pos"></label>
+                                    <input type="text" id="add_pos" name="add_pos" class="form-control">
+                                    <br>
+                                    <label class="control-label" th:text="#{user.dep}+'&nbsp;:'" for="add_dep"></label>
+                                    <input type="text" id="add_dep" name="add_dep" class="form-control">
+                                    <br>
+                                    <label class="control-label" th:text="#{user.email}+'&nbsp;:'"
+                                           for="add_email"></label>
+                                    <input type="text" id="add_email" name="add_email" class="form-control" required="">
+                                    <br>
+                                    <label class="control-label" th:text="#{user.tel}+'&nbsp;:'" for="add_tel"></label>
+                                    <input type="text" id="add_tel" name="add_tel" class="form-control" required="">
+                                    <br>
+                                    <label class="control-label" th:text="#{user.remark}+'&nbsp;:'"
                                            for="add_rem"></label>
                                     <input type="text" id="add_rem" name="add_rem" class="form-control">
+                                    <br>
+                                    <input type="checkbox" id="add_isAdmin" name="add_isAdmin"
+                                           th:text="#{user.isAdmin}">
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">
                                         Close
                                     </button>
-                                    <button type="submit" class="btn btn-primary" th:text="#{device.add}"
+                                    <button type="submit" class="btn btn-primary" th:text="#{user.add}"
                                             style="background-color: #f36f20;">
                                     </button>
                                 </div>

@@ -100,7 +100,7 @@
                                th:if="${devAndUser.get(0).getReq()} == ''
                                and ${devAndUser.get(0).getStatus()} != '库存中'
                                and ${devAndUser.get(0).getStatus()} != '工号：' + ${session.tbUserInfo.getId()}"
-                               th:href="@{/request(lang=${param.lang}, devId=${devAndUser.get(0).getId()},
+                               th:href="@{/device_request(lang=${param.lang}, devId=${devAndUser.get(0).getId()},
                                reqerId=${session.tbUserInfo.getId()})}" onclick="alert(
                                    '\n借用请求发送成功，请联系已借用人进行确认。\n\n' +
                                     'The borrowing request was sent successfully, ' +
@@ -129,7 +129,7 @@
                                [[${devAndUser.get(0).getRemark()}]])"></a>
                             <a class="btn btn-sm btn-danger" th:text="#{device.delete}"
                                th:if="${session.tbUserInfo.isIsadmin()}"
-                               th:href="@{/delete(lang=${param.lang}, devId=${devAndUser.get(0).getId()})}"
+                               th:href="@{/device_delete(lang=${param.lang}, devId=${devAndUser.get(0).getId()})}"
                                onclick="return confirm(
                                    '\n确认要删除该设备？\n\nAre you sure you want to delete the device?');"></a>
                         </td>
@@ -148,12 +148,12 @@
                                     &times;
                                 </button>
                             </div>
-                            <form id="update_data" th:action="@{/update(lang=${param.lang})}" method="post">
+                            <form id="update_data" th:action="@{/device_update(lang=${param.lang})}" method="post">
                                 <div class="modal-body">
                                     <label class="control-label" th:text="#{device.id}+'&nbsp;:&nbsp;'"
                                            for="update_id"></label>
                                     <input type="text" id="update_id" name="update_id" class="form-control"
-                                           readonly="readonly">
+                                           readonly="">
                                     <br>
                                     <label class="control-label" th:text="#{device.name}+'&nbsp;:&nbsp;'"
                                            for="update_name"></label>
@@ -163,7 +163,7 @@
                                     <label class="control-label" th:text="#{device.status}+'&nbsp;:&nbsp;'"
                                            for="update_status"></label>
                                     <input type="text" id="update_status" name="update_status" class="form-control"
-                                           readonly="readonly">
+                                           readonly="">
                                     <br>
                                     <label class="control-label" th:text="#{device.description}+'&nbsp;:&nbsp;'"
                                            for="update_des"></label>
@@ -210,7 +210,7 @@
                                     &times;
                                 </button>
                             </div>
-                            <form id="add_data" th:action="@{/add(lang=${param.lang})}" method="post">
+                            <form id="add_data" th:action="@{/device_add(lang=${param.lang})}" method="post">
                                 <div class="modal-body">
                                     <label class="control-label" th:text="#{device.id}+'&nbsp;:&nbsp;'"
                                            for="add_id"></label>

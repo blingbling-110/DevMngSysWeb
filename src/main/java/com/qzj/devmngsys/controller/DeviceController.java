@@ -34,7 +34,7 @@ public class DeviceController {
         return localeService.addLang(modelAndView, language);
     }
 
-    @RequestMapping("/request")
+    @RequestMapping("/device_request")
     public ModelAndView request(@RequestParam(value = "lang", required = false) String language,
                                 @RequestParam(value = "devId") String devId,
                                 @RequestParam(value = "reqerId") String reqerId) {
@@ -43,7 +43,7 @@ public class DeviceController {
         return localeService.addLang(modelAndView, language);
     }
 
-    @RequestMapping("/delete")
+    @RequestMapping("/device_delete")
     public ModelAndView delete(@RequestParam(value = "lang", required = false) String language,
                                @RequestParam(value = "devId") String devId) {
         deviceService.delete(devId);
@@ -51,7 +51,7 @@ public class DeviceController {
         return localeService.addLang(modelAndView, language);
     }
 
-    @RequestMapping("/update")
+    @RequestMapping("/device_update")
     public ModelAndView update(@RequestParam(value = "lang", required = false) String language,
                                @RequestParam(value = "update_id") String devId,
                                @RequestParam(value = "update_name") String devName,
@@ -62,7 +62,7 @@ public class DeviceController {
         return localeService.addLang(modelAndView, language);
     }
 
-    @RequestMapping("/add")
+    @RequestMapping("/device_add")
     public ModelAndView add(@RequestParam(value = "lang", required = false) String language,
                             @RequestParam(value = "add_id") String devId,
                             @RequestParam(value = "add_name") String devName,

@@ -22,7 +22,7 @@ public class UserController {
     public ModelAndView device(@RequestParam(value = "lang", required = false) String language,
                                @RequestParam(value = "id", required = false) String id,
                                @RequestParam(value = "name", required = false) String name,
-                               @RequestParam(value = "userName", required = false) String userName,
+                               @RequestParam(value = "username", required = false) String username,
                                @RequestParam(value = "pos", required = false) String pos,
                                @RequestParam(value = "dep", required = false) String dep,
                                @RequestParam(value = "email", required = false) String email,
@@ -30,9 +30,17 @@ public class UserController {
                                @RequestParam(value = "remark", required = false) String remark,
                                @RequestParam(value = "isAdmin", required = false) boolean isAdmin,
                                HttpSession httpSession) {
-        httpSession.setAttribute("UserInfo", userService.searchUserInfo(id, name, userName, pos, dep,
+        httpSession.setAttribute("UserInfo", userService.searchUserInfo(id, name, username, pos, dep,
                 email, tel, remark, isAdmin));
         ModelAndView modelAndView = new ModelAndView("user");
+        return localeService.addLang(modelAndView, language);
+    }
+
+    @RequestMapping("/user_delete")
+    public ModelAndView delete(@RequestParam(value = "lang", required = false) String language,
+                               @RequestParam(value = "id") String id) {
+        userService.delete(id);
+        ModelAndView modelAndView = new ModelAndView("redirect:user");
         return localeService.addLang(modelAndView, language);
     }
 }

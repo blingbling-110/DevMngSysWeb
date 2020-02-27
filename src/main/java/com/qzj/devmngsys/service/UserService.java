@@ -21,7 +21,7 @@ public class UserService {
      *
      * @param id        欲搜索的工号
      * @param name      欲搜索的姓名
-     * @param userName  欲搜索的用户名
+     * @param username  欲搜索的用户名
      * @param pos       欲搜索的职位
      * @param dep       欲搜索的部门
      * @param email     欲搜索的邮箱
@@ -30,7 +30,7 @@ public class UserService {
      * @param isAdmin   欲搜索的管理员权限值
      * @return  包含返回的人员信息的List集合
      */
-    public List<TbUserInfo> searchUserInfo(String id, String name, String userName, String pos, String dep,
+    public List<TbUserInfo> searchUserInfo(String id, String name, String username, String pos, String dep,
                                              String email, String tel, String remark, boolean isAdmin) {
         if (id != null && !id.isEmpty())
             id = id.trim();
@@ -38,8 +38,8 @@ public class UserService {
             id = "'%'";
         if (name != null && !name.isEmpty())
             name = name.trim();
-        if (userName != null && !userName.isEmpty())
-            userName = userName.trim();
+        if (username != null && !username.isEmpty())
+            username = username.trim();
         if (pos != null && !pos.isEmpty())
             pos = pos.trim();
         if (dep != null && !dep.isEmpty())
@@ -51,8 +51,12 @@ public class UserService {
         if (remark != null && !remark.isEmpty())
             remark = remark.trim();
         //	搜索用户信息
-        List<TbUserInfo> UserInfo = commonDao.searchUserInfo(id, name, userName, pos, dep,
+        List<TbUserInfo> UserInfo = commonDao.searchUserInfo(id, name, username, pos, dep,
                 email, tel, remark, isAdmin);
         return UserInfo;
+    }
+
+    public void delete(String id) {
+        userDao.delete(id);
     }
 }
