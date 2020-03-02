@@ -1,6 +1,6 @@
 package com.qzj.devmngsys.repository;
 
-import com.qzj.devmngsys.entities.TbDevInfo;
+import com.qzj.devmngsys.entities.TbUserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -14,13 +14,16 @@ public class UserDao {
         jdbcTemplate.update("delete from tb_userinfo where id=?", id);
     }
 
-    public void update(TbDevInfo devInfo) {
-        jdbcTemplate.update("update tb_devinfo set name=?, des=?, remark=? where id=?",
-                devInfo.getName(), devInfo.getDes(), devInfo.getRemark(), devInfo.getId());
+    public void update(TbUserInfo userInfo) {
+        jdbcTemplate.update("update tb_userinfo set name=?, userid=?, pos=?, dep=?, email=?, tel=?, " +
+                        "remark=?, isadmin=? where id=?", userInfo.getName(), userInfo.getUserid(),
+                userInfo.getPos(), userInfo.getDep(), userInfo.getEmail(), userInfo.getTel(), userInfo.getRemark(),
+                userInfo.isIsadmin(), userInfo.getId());
     }
 
-    public void add(TbDevInfo devInfo) {
-        jdbcTemplate.update("insert into tb_devinfo values(?, ?, ?, ?, ?, '')",
-                devInfo.getId(), devInfo.getName(), devInfo.getStatus(), devInfo.getDes(), devInfo.getRemark());
+    public void add(TbUserInfo userInfo) {
+        jdbcTemplate.update("insert into tb_userinfo values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                userInfo.getId(), userInfo.getName(), userInfo.getUserid(), userInfo.getPwd(), userInfo.getPos(),
+                userInfo.getDep(), userInfo.getEmail(), userInfo.getTel(), userInfo.getRemark(), userInfo.isIsadmin());
     }
 }

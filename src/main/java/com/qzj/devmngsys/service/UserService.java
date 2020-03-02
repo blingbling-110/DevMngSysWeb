@@ -51,12 +51,65 @@ public class UserService {
         if (remark != null && !remark.isEmpty())
             remark = remark.trim();
         //	搜索用户信息
-        List<TbUserInfo> UserInfo = commonDao.searchUserInfo(id, name, username, pos, dep,
-                email, tel, remark, isAdmin);
-        return UserInfo;
+        return commonDao.searchUserInfo(id, name, username, pos, dep, email, tel, remark, isAdmin);
     }
 
     public void delete(String id) {
         userDao.delete(id);
+    }
+
+    public int update(String id, String name, String username, String pos, String dep, String email,
+                      String tel, String remark, boolean isAdmin, String current_username) {
+        List<TbUserInfo> userList = commonDao.searchUserInfo(null, null, null, null, null,
+                null, null, null, false);
+        userList.addAll(commonDao.searchUserInfo(null, null, null, null, null, null,
+                null, null, true));
+        for (TbUserInfo u: userList) {
+            if (username.equals(u.getUserid()) && !username.equals(current_username))
+                return -1;
+        }
+        TbUserInfo userInfo = new TbUserInfo();
+        userInfo.setId(Integer.parseInt(id.trim()));
+        userInfo.setName(name.trim());
+        userInfo.setUserid(username.trim());
+        userInfo.setPos(pos.trim());
+        userInfo.setDep(dep.trim());
+        userInfo.setEmail(email.trim());
+        userInfo.setTel(tel.trim());
+        userInfo.setRemark(remark.trim());
+        userInfo.setIsadmin(isAdmin);
+        userDao.update(userInfo);
+        return 0;
+    }
+
+    public int add(String id, String name, String username, String  pwd, String pos, String dep, String email,
+                   String tel, String remark, boolean isAdmin) {
+        List<TbUserInfo> userList = commonDao.searchUserInfo(null, null, null, null, null,
+                null, null, null, false);
+        userList.addAll(commonDao.searchUserInfo(null, null, null, null, null, null,
+                null, null, true));
+        for (TbUserInfo u: userList) {
+            if (id.equals(u.getId().toString()))
+                return -1;
+            if (username.equals(u.getUserid()))
+                return -2;
+        }
+        TbUserInfo userInfo = new TbUserInfo();
+        try {
+            userInfo.setId(Integer.parseInt(id.trim()));
+        }catch(NumberFormatException exc) {
+            return -3;
+        }
+        userInfo.setName(name.trim());
+        userInfo.setUserid(username.trim());
+        userInfo.setPwd(pwd);
+        userInfo.setPos(pos.trim());
+        userInfo.setDep(dep.trim());
+        userInfo.setEmail(email.trim());
+        userInfo.setTel(tel.trim());
+        userInfo.setRemark(remark.trim());
+        userInfo.setIsadmin(isAdmin);
+        userDao.add(userInfo);
+        return 0;
     }
 }

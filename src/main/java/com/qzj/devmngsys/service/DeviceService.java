@@ -92,21 +92,25 @@ public class DeviceService {
     }
 
     public int add(String devId, String devName, String devSta, String devDes, String devRem) {
-        List<TbDevInfo> allDevInfo = commonDao.searchDevInfo("", "", "", "", "");
-        for(int i = 0; i < allDevInfo.size(); i++) {
-            String eachId = allDevInfo.get(i).getId();
-            if(devId.equals(eachId)) {
-                //设备编号已存在
-                return -1;
+        if (devSta.startsWith("库存中") || devSta.startsWith("工号：")) {
+            List<TbDevInfo> allDevInfo = commonDao.searchDevInfo("", "", "", "", "");
+            for (TbDevInfo tbDevInfo : allDevInfo) {
+                String eachId = tbDevInfo.getId();
+                if (devId.equals(eachId)) {
+                    //设备编号已存在
+                    return -1;
+                }
             }
-        }
-        TbDevInfo devInfo = new TbDevInfo();
-        devInfo.setId(devId);
-        devInfo.setName(devName.trim());
-        devInfo.setStatus(devSta.trim());
-        devInfo.setDes(devDes.trim());
-        devInfo.setRemark(devRem.trim());
-        deviceDao.add(devInfo);
-        return 0;
+            TbDevInfo devInfo = new TbDevInfo();
+            devInfo.setId(devId);
+            devInfo.setName(devName.trim());
+            devInfo.setStatus(devSta.trim());
+            devInfo.setDes(devDes.trim());
+            devInfo.setRemark(devRem.trim());
+            deviceDao.add(devInfo);
+            return 0;
+        } else
+            //请正确填写设备状态
+            return -2;
     }
 }

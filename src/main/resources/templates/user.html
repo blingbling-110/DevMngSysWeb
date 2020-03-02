@@ -14,6 +14,27 @@
     <!-- Custom styles for this template -->
     <link th:href="@{asserts/css/dashboard.css}" rel="stylesheet">
 
+    <script>
+        var cookies = document.cookie.split(";");
+        for(var i = 0; i < cookies.length; i++)
+        {
+            var cookie = cookies[i].split("=");
+            if (cookie[0].trim() === "msg") {
+                switch (cookie[1].trim()) {
+                    case "Username":
+                        alert("\n用户名已存在\n\nUsername already exists");
+                        break;
+                    case "EmployeeID":
+                        alert("\n工号已存在\n\nEmployee ID already exists");
+                        break;
+                    case "ParseInt":
+                        alert("\n工号只能为整数，且不能超过2147483647\n\n" +
+                            "The Employee ID can only be an integer and cannot exceed 2147483647");
+                        break;
+                }
+            }
+        }
+    </script>
 </head>
 
 <body style="height: 100%;">
@@ -105,7 +126,8 @@
                                th:if="${session.tbUserInfo.isIsadmin()}"
                                th:href="@{/user_delete(lang=${param.lang}, id=${user.getId()})}"
                                onclick="return confirm(
-                                   '\n确认要删除该用户？\n\nAre you sure you want to delete the user?');"></a>
+                                   '\n确认要删除该用户？\n\nAre you sure you want to delete this user?');"></a>
+                            <a th:unless="${session.tbUserInfo.isIsadmin()}">&minus;</a>
                         </td>
                     </tr>
                     </tbody>
@@ -137,6 +159,8 @@
                                            for="update_username"></label>
                                     <input type="text" id="update_username" name="update_username" class="form-control"
                                            required="">
+                                    <input type="hidden" id="current_username" name="current_username"
+                                           class="form-control" required="">
                                     <br>
                                     <label class="control-label" th:text="#{user.pos}+'&nbsp;'"
                                            for="update_pos"></label>
@@ -184,6 +208,8 @@
                     name.value = update_name;
                     var username = document.getElementById("update_username");
                     username.value = update_username;
+                    var current_username = document.getElementById("current_username");
+                    current_username.value = update_username;
                     var pos = document.getElementById("update_pos");
                     pos.value = update_pos;
                     var dep = document.getElementById("update_dep");
