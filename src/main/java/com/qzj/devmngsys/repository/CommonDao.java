@@ -201,7 +201,8 @@ public class CommonDao {
         if (remark == null)
             remark = "";
         String sql = "select * from tb_brw where id like '%" + id + "%' and devid like '%" + devId + "%' and "
-                + "brwerid like " + brwerId + " and date like '%" + date + "%' and  remark like '%" + remark + "%'";
+                + "brwerid like " + brwerId + " and date like '%" + date + "%' and  remark like '%" + remark
+                + "%' order by id desc";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(TbBrw.class));
     }
 }
