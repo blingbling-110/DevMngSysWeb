@@ -176,4 +176,32 @@ public class CommonDao {
                 + remark + "%' and isadmin like " + isAdmin;
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(TbUserInfo.class));
     }
+
+    /**
+     * 搜索借用单信息
+     *
+     * @param id        欲搜索的借用单编号
+     * @param devId     欲搜索的借用设备编号
+     * @param brwerId   欲搜索的借用人工号
+     * @param date      欲搜索的借用日期
+     * @param remark    欲搜索的备注
+     * @return          包含返回的借用单信息的List集合
+     */
+    public List<TbBrw> searchBrwInfo(String id, String devId, String brwerId, String date, String remark) {
+        if (id == null) {
+            id = "";
+        }
+        if (devId == null) {
+            devId = "";
+        }
+        if (brwerId == null)
+            brwerId = "'%'";
+        if (date == null)
+            date = "";
+        if (remark == null)
+            remark = "";
+        String sql = "select * from tb_brw where id like '%" + id + "%' and devid like '%" + devId + "%' and "
+                + "brwerid like " + brwerId + " and date like '%" + date + "%' and  remark like '%" + remark + "%'";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(TbBrw.class));
+    }
 }
