@@ -1,8 +1,8 @@
 package com.qzj.devmngsys.controller;
 
 import com.qzj.devmngsys.service.BorrowService;
+import com.qzj.devmngsys.service.CommonService;
 import com.qzj.devmngsys.service.LocaleService;
-import com.qzj.devmngsys.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,10 +20,10 @@ public class BorrowController {
     private LocaleService localeService;
 
     @Autowired
-    private UserService userService;
+    private BorrowService borrowService;
 
     @Autowired
-    private BorrowService borrowService;
+    private CommonService commonService;
 
     @RequestMapping("/borrow")
     public ModelAndView device(@RequestParam(value = "lang", required = false) String language,
@@ -38,71 +38,41 @@ public class BorrowController {
         return localeService.addLang(modelAndView, language);
     }
 
-    @RequestMapping("/borrow_delete")
-    public ModelAndView delete(@RequestParam(value = "lang", required = false) String language,
-                               @RequestParam(value = "id") String id) {
-        userService.delete(id);
-        ModelAndView modelAndView = new ModelAndView("redirect:user");
-        return localeService.addLang(modelAndView, language);
-    }
-
-    @RequestMapping("/borrow_update")
-    public ModelAndView update(@RequestParam(value = "lang", required = false) String language,
-                               @RequestParam(value = "update_id") String id,
-                               @RequestParam(value = "update_name") String name,
-                               @RequestParam(value = "update_username") String username,
-                               @RequestParam(value = "update_pos") String pos,
-                               @RequestParam(value = "update_dep") String dep,
-                               @RequestParam(value = "update_email") String email,
-                               @RequestParam(value = "update_tel") String tel,
-                               @RequestParam(value = "update_rem") String rem,
-                               @RequestParam(value = "update_isAdmin", required = false) boolean isAdmin,
-                               @RequestParam(value = "current_username") String current_username,
-                               HttpServletRequest request,
-                               HttpServletResponse response) {
-        int result = userService.update(id, name, username, pos, dep, email, tel, rem, isAdmin, current_username);
-        if (result == -1) {
-            Cookie cookie = new Cookie("msg", "Username");
-            cookie.setMaxAge(5);
-            cookie.setPath(request.getContextPath());
-            response.addCookie(cookie);
-        }
-        ModelAndView modelAndView = new ModelAndView("redirect:user");
-        return localeService.addLang(modelAndView, language);
-    }
-
     @RequestMapping("/borrow_add")
     public ModelAndView add(@RequestParam(value = "lang", required = false) String language,
-                            @RequestParam(value = "add_id") String id,
-                            @RequestParam(value = "add_name") String name,
-                            @RequestParam(value = "add_username") String username,
-                            @RequestParam(value = "add_pwd") String pwd,
-                            @RequestParam(value = "add_pos") String pos,
-                            @RequestParam(value = "add_dep") String dep,
-                            @RequestParam(value = "add_email") String email,
-                            @RequestParam(value = "add_tel") String tel,
+                            @RequestParam(value = "device_id") String devId,
+                            @RequestParam(value = "brwerId") String brwerId,
                             @RequestParam(value = "add_rem") String rem,
-                            @RequestParam(value = "add_isAdmin", required = false) boolean isAdmin,
                             HttpServletRequest request,
                             HttpServletResponse response) {
-        int result = userService.add(id, name, username, pwd, pos, dep, email, tel, rem, isAdmin);
+        int result = commonService.borrow(devId, brwerId, rem);
         if (result == -1) {
-            Cookie cookie = new Cookie("msg", "EmployeeID");
+            Cookie cookie = new Cookie("msg", "BorrowFailed");
             cookie.setMaxAge(5);
             cookie.setPath(request.getContextPath());
             response.addCookie(cookie);
         } else if (result == -2) {
-            Cookie cookie = new Cookie("msg", "Username");
+            Cookie cookie = new Cookie("msg", "DeviceBorrowed");
             cookie.setMaxAge(5);
             cookie.setPath(request.getContextPath());
             response.addCookie(cookie);
         } else if (result == -3) {
-            Cookie cookie = new Cookie("msg", "ParseInt");
+            Cookie cookie = new Cookie("msg", "DeviceIdNotExist");
+            cookie.setMaxAge(5);
+            cookie.setPath(request.getContextPath());
+            response.addCookie(cookie);
+        } else if (result == -4) {
+            Cookie cookie = new Cookie("msg", "BorrowerIdError");
+            cookie.setMaxAge(5);
+            cookie.setPath(request.getContextPath());
+            response.addCookie(cookie);
+        } else if (result == -5) {
+            Cookie cookie = new Cookie("msg", "BorrowerIdNotExist");
             cookie.setMaxAge(5);
             cookie.setPath(request.getContextPath());
             response.addCookie(cookie);
         }
-        ModelAndView modelAndView = new ModelAndView("redirect:user");
+        ModelAndView modelAndView = new ModelAndView("redirect:borrow");
         return localeService.addLang(modelAndView, language);
     }
 }

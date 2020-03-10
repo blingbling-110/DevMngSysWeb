@@ -1,8 +1,12 @@
 package com.qzj.devmngsys.service;
 
+import com.qzj.devmngsys.entities.Item;
 import com.qzj.devmngsys.entities.TbBrw;
+import com.qzj.devmngsys.entities.TbDevInfo;
+import com.qzj.devmngsys.entities.TbUserInfo;
 import com.qzj.devmngsys.repository.CommonDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -20,9 +24,31 @@ public class CommonService {
      * @param devId   设备编号
      * @param brwerId 借用人工号
      * @param remark  备注
-     * @return 借用成功与否
+     * @return 借用成功与否的相关退出码
      */
-    public boolean borrow(String devId, String brwerId, String remark) {
+    public int borrow(String devId, String brwerId, String remark) {
+        Item item = new Item();
+        item.setId(devId);
+        try {
+            TbDevInfo tbDevInfo = commonDao.getDevInfo(item);
+            if (!tbDevInfo.getStatus().equals("库存中"))
+                return -2;//设备已借出，请在设备总览中进行借用请求操作
+        }catch (EmptyResultDataAccessException e) {
+            return -3;//设备编号不存在
+        }
+        Integer jobNum = null;
+        try {
+            jobNum = Integer.parseInt(brwerId);
+        }catch (NumberFormatException e) {
+            return -4;//工号只能为整数，且不能超过2147483647
+        }
+        item.setId(null);
+        item.setJobNum(jobNum);
+        try {
+            TbUserInfo tbUserInfo = commonDao.getUserInfo(item);
+        }catch (EmptyResultDataAccessException e) {
+            return -5;//借用人工号不存在
+        }
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat(
                 "yyyyMMdd");
@@ -47,7 +73,7 @@ public class CommonService {
         brw.setRemark(remark);
         boolean res = commonDao.insertTbBrw(brw);
         commonDao.sendReq(devId, "");
-        return res;
+        return res? 0: -1;
     }
 
     /**

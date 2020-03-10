@@ -20,7 +20,7 @@
         {
             var cookie = cookies[i].split("=");
             if (cookie[0].trim() === "agreeRes") {
-                if (cookie[1].trim() === "true")
+                if (cookie[1].trim() === "0")
                     alert("\n设备已成功转移\n\nDevice successfully transferred");
                 else
                     alert("\n设备转移失败\n\nDevice transfer failed");

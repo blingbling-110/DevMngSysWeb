@@ -33,7 +33,7 @@ public class CommonDao {
      * @param item 欲读取的设备
      * @return 该设备的设备信息公共类对象
      */
-    private TbDevInfo getDevInfo(Item item) {
+    public TbDevInfo getDevInfo(Item item) {
         String where = "name='" + item.getName() + "'";//	获取item对象的name属性
         if (item.getId() != null)
             where = "id='" + item.getId() + "'";//	获取item对象的id属性
