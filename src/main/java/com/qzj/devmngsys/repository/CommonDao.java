@@ -1,9 +1,6 @@
 package com.qzj.devmngsys.repository;
 
-import com.qzj.devmngsys.entities.Item;
-import com.qzj.devmngsys.entities.TbBrw;
-import com.qzj.devmngsys.entities.TbDevInfo;
-import com.qzj.devmngsys.entities.TbUserInfo;
+import com.qzj.devmngsys.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -25,6 +22,15 @@ public class CommonDao {
      */
     public List<String> getAllBrwId() {
         return jdbcTemplate.queryForList("select id from tb_brw", String.class);
+    }
+
+    /**
+     * 获取所有归还单编号
+     *
+     * @return 归还单编号列表
+     */
+    public List<String> getAllRtnId() {
+        return jdbcTemplate.queryForList("select id from tb_rtn", String.class);
     }
 
     /**
@@ -75,6 +81,33 @@ public class CommonDao {
             jdbcTemplate.execute("update tb_devinfo set status='"
                     + "工号：" + brw.getBrwerId()
                     + "',remark='" + brw.getRemark()
+                    + "' where id='" + devInfo.getId() + "'");
+        else {
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();//手动回滚
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 在事务中增加归还信息（保持数据的完整性）
+     *
+     * @param rtn 欲插入数据库的归还公共类对象
+     * @return 数据插入成功与否
+     */
+    @Transactional
+    public boolean insertTbRtn(TbRtn rtn) {
+        //	增加借用表记录
+        jdbcTemplate.execute("insert into tb_rtn values('" + rtn.getId()
+                + "','" + rtn.getDevId() + "'," + rtn.getRtnerId()
+                + ",'" + rtn.getDate() + "','" + rtn.getRemark() + "')");
+        //	更改设备信息
+        Item item = new Item();
+        item.setId(rtn.getDevId());//	获取借用设备编号
+        TbDevInfo devInfo = getDevInfo(item);
+        if (devInfo.getId() != null && !devInfo.getId().isEmpty())
+            jdbcTemplate.execute("update tb_devinfo set status='"
+                    + "库存中" + "',remark='" + rtn.getRemark()
                     + "' where id='" + devInfo.getId() + "'");
         else {
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();//手动回滚
@@ -204,5 +237,34 @@ public class CommonDao {
                 + "brwerid like " + brwerId + " and date like '%" + date + "%' and  remark like '%" + remark
                 + "%' order by id desc";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(TbBrw.class));
+    }
+
+    /**
+     * 搜索归还单信息
+     *
+     * @param id        欲搜索的归还单编号
+     * @param devId     欲搜索的归还设备编号
+     * @param rtnerId   欲搜索的归还人工号
+     * @param date      欲搜索的归还日期
+     * @param remark    欲搜索的备注
+     * @return          包含返回的归还单信息的List集合
+     */
+    public List<TbRtn> searchRtnInfo(String id, String devId, String rtnerId, String date, String remark) {
+        if (id == null) {
+            id = "";
+        }
+        if (devId == null) {
+            devId = "";
+        }
+        if (rtnerId == null)
+            rtnerId = "'%'";
+        if (date == null)
+            date = "";
+        if (remark == null)
+            remark = "";
+        String sql = "select * from tb_rtn where id like '%" + id + "%' and devid like '%" + devId + "%' and "
+                + "rtnerid like " + rtnerId + " and date like '%" + date + "%' and  remark like '%" + remark
+                + "%' order by id desc";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(TbRtn.class));
     }
 }

@@ -27,6 +27,9 @@ public class CommonService {
      * @return 借用成功与否的相关退出码
      */
     public int borrow(String devId, String brwerId, String remark) {
+        devId = devId.trim();
+        brwerId = brwerId.trim();
+        remark = remark.trim();
         Item item = new Item();
         item.setId(devId);
         try {
@@ -36,7 +39,7 @@ public class CommonService {
         }catch (EmptyResultDataAccessException e) {
             return -3;//设备编号不存在
         }
-        Integer jobNum = null;
+        Integer jobNum;
         try {
             jobNum = Integer.parseInt(brwerId);
         }catch (NumberFormatException e) {
@@ -68,7 +71,7 @@ public class CommonService {
         TbBrw brw = new TbBrw();//	封装待增加借用单的对象
         brw.setId(brwId.trim());
         brw.setDevId(devId);
-        brw.setBrwerId(Integer.parseInt(brwerId));
+        brw.setBrwerId(jobNum);
         brw.setDate(dateStr);
         brw.setRemark(remark);
         boolean res = commonDao.insertTbBrw(brw);

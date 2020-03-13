@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)http://getbootstrap.com/docs/4.0/examples/dashboard/ -->
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org" style="height: 100%;">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="归还管理">
+    <meta name="author" content="覃子俊">
+
+    <title th:text="#{return.title}">Dashboard Template for Bootstrap</title>
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{asserts/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{asserts/css/dashboard.css}" rel="stylesheet">
+
+    <script>
+        var cookies = document.cookie.split(";");
+        for(var i = 0; i < cookies.length; i++)
+        {
+            var cookie = cookies[i].split("=");
+            if (cookie[0].trim() === "msg") {
+                switch (cookie[1].trim()) {
+                    case "ReturnFailed":
+                        alert("\n归还设备失败\n\nFailed to return device");
+                        break;
+                    case "DeviceReturned":
+                        alert("\n设备已归还\n\n" +
+                            "The device has been returned");
+                        break;
+                    case "DeviceIdNotExist":
+                        alert("\n设备编号不存在\n\nDevice ID does not exist");
+                        break;
+                    case "ReturnerIdError":
+                        alert("\n工号只能为整数，且不能超过2147483647\n\n" +
+                            "The Employee ID can only be an integer and cannot exceed 2147483647");
+                        break;
+                    case "ReturnerIdNotExist":
+                        alert("\n归还人工号不存在\n\nReturner's employee ID does not exist");
+                        break;
+                }
+            }
+        }
+    </script>
+</head>
+
+<body style="height: 100%;">
+<div th:replace="common::topbar"></div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="common::sidebar(page='return')"></div>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <h2 th:text="#{return.title}">Section title</h2>
+            <br>
+            <button class="btn btn-primary" th:text="#{return.add}"
+               th:if="${session.tbUserInfo.isIsadmin()}"
+               style="background-color: #f36f20;color: white;"
+               data-toggle="modal" data-target="#add"></button>
+            <br>
+            <br>
+            <form id="search_data" th:action="@{/return(lang=${param.lang})}" method="post">
+                <label th:text="#{return.id}+'&nbsp;:'" for="search_id"></label>
+                &nbsp;<input type="text" id="search_id" name="id" size="40">
+                &nbsp;<label th:text="#{return.devId}+'&nbsp;:'" for="search_devId"></label>
+                &nbsp;<input type="text" id="search_devId" name="devId" size="40">
+                &nbsp;<label th:text="#{return.rtnerId}+'&nbsp;:'" for="search_rtnerId"></label>
+                &nbsp;<input type="text" id="search_rtnerId" name="rtnerId" size="40">
+                <br>
+                <label th:text="#{return.date}+'&nbsp;:'" for="search_date"></label>
+                &nbsp;<input type="text" id="search_date" name="date" size="60">
+                &nbsp;<label th:text="#{return.remark}+'&nbsp;:'" for="search_rem"></label>
+                &nbsp;<input type="text" id="search_rem" name="remark" size="60">
+                &nbsp;<button type="submit" class="btn btn-primary" th:text="#{return.search}"
+                        style="background-color: #f36f20;color: white;"></button>
+            </form>
+            <br>
+            <br>
+            <div class="table-responsive">
+                <p style="text-align: center;font-size: 20px;" th:text="#{return.empty}"
+                   th:if="${session.RtnInfo} == null or ${session.RtnInfo.isEmpty()}"></p>
+                <table class="table table-striped table-sm"
+                       th:unless="${session.RtnInfo} == null or ${session.RtnInfo.isEmpty()}">
+                    <thead>
+                    <tr>
+                        <th>[[#{return.id}]]</th>
+                        <th>[[#{return.devId}]]</th>
+                        <th>[[#{return.rtnerId}]]</th>
+                        <th>[[#{return.date}]]</th>
+                        <th>[[#{return.remark}]]</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="rtn: ${session.RtnInfo}">
+                        <td th:text="${rtn.getId()}"></td>
+                        <td th:text="${rtn.getDevId()}"></td>
+                        <td th:text="${rtn.getRtnerId()}"></td>
+                        <td th:text="${rtn.getDate()}"></td>
+                        <td th:text="${rtn.getRemark()}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="add_title">
+                                    [[#{return.add}]]
+                                </h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                    &times;
+                                </button>
+                            </div>
+                            <form id="add_data" th:action="@{/return_add(lang=${param.lang})}" method="post">
+                                <div class="modal-body">
+                                    <label class="control-label" th:text="#{device.id}+'&nbsp;:'"
+                                           for="device_id"></label>
+                                    <input type="text" id="device_id" name="device_id" class="form-control" required="">
+                                    <br>
+                                    <label class="control-label" th:text="#{user.id}+'&nbsp;:'"
+                                           for="rtnerId"></label>
+                                    <input type="text" id="rtnerId" name="rtnerId" class="form-control" required="">
+                                    <br>
+                                    <label class="control-label" th:text="#{return.remark}+'&nbsp;:'"
+                                           for="add_rem"></label>
+                                    <input type="text" id="add_rem" name="add_rem" class="form-control">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                                        Close
+                                    </button>
+                                    <button type="submit" class="btn btn-primary" th:text="#{return.add}"
+                                            style="background-color: #f36f20;">
+                                    </button>
+                                </div>
+                            </form>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal -->
+                </div>
+
+            </div>
+
+            <div th:replace="common::footer"></div>
+
+        </main>
+
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" src="asserts/js/jquery-3.2.1.slim.min.js"></script>
+<script type="text/javascript" src="asserts/js/popper.min.js"></script>
+<script type="text/javascript" src="asserts/js/bootstrap.min.js"></script>
+
+<!-- Icons -->
+<script type="text/javascript" src="asserts/js/feather.min.js"></script>
+<script>
+    feather.replace()
+</script>
+
+<!--交互式页面动态背景-->
+<script type="text/javascript" color="243,111,32" opacity='1' pointColor="255,255,255"
+        src="asserts/js/canvas-nest.js"></script>
+
+</body>
+
+</html>
