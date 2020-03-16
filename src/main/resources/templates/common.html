@@ -13,7 +13,7 @@
          th:text="#{common.title}" aria-label="Device Management System"></div>
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-            <a class="nav-link" th:href="@{/signOut(lang=${param.lang})}"
+            <a class="nav-link" th:href="@{/sign_out(lang=${param.lang})}"
                th:text="#{common.signout}">Sign out</a>
         </li>
     </ul>
@@ -25,7 +25,7 @@
         <ul class="nav flex-column">
             <li class="nav-item">
                 <a th:class="${page} == 'dashboard' ? 'nav-link active' : 'nav-link'"
-                   th:href="@{/toDashboard(lang=${param.lang})}">
+                   th:href="@{/to_dashboard(lang=${param.lang})}">
                     <img th:src="@{/asserts/img/dashboard.png}" alt="dashboard.png" class="feather feather-file"/>
                     [[#{common.dashboard}]] <span class="sr-only" th:if="${page} == 'dashboard'">(current)</span>
                 </a>

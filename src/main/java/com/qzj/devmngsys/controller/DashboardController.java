@@ -26,7 +26,7 @@ public class DashboardController {
     @Autowired
     private CommonService commonService;
 
-    @RequestMapping("/toDashboard")
+    @RequestMapping("/to_dashboard")
     public ModelAndView dashboard(@RequestParam(value = "lang", required = false) String language,
                                   HttpSession httpSession) {
         TbUserInfo tbUserInfo = (TbUserInfo) httpSession.getAttribute("tbUserInfo");
@@ -46,7 +46,7 @@ public class DashboardController {
         cookie.setMaxAge(5);
         cookie.setPath(request.getContextPath());
         response.addCookie(cookie);
-        ModelAndView modelAndView = new ModelAndView("redirect:toDashboard");
+        ModelAndView modelAndView = new ModelAndView("redirect:to_dashboard");
         return localeService.addLang(modelAndView, language);
     }
 
@@ -54,7 +54,7 @@ public class DashboardController {
     public ModelAndView disagree(@RequestParam(value = "lang", required = false) String language,
                                  @RequestParam(value = "devId") String devId) {
         commonService.reject(devId);
-        ModelAndView modelAndView = new ModelAndView("redirect:toDashboard");
+        ModelAndView modelAndView = new ModelAndView("redirect:to_dashboard");
         return localeService.addLang(modelAndView, language);
     }
 }

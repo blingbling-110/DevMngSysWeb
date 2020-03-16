@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)http://getbootstrap.com/docs/4.0/examples/dashboard/ -->
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org" style="height: 100%;">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="备份与还原">
+    <meta name="author" content="覃子俊">
+
+    <title th:text="#{backup.title}">Dashboard Template for Bootstrap</title>
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{asserts/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{asserts/css/dashboard.css}" rel="stylesheet">
+
+</head>
+
+<body style="height: 100%;">
+<div th:replace="common::topbar"></div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="common::sidebar(page='backup')"></div>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <h2 th:text="#{backup.title}">Section title</h2>
+            <br>
+            <a class="btn btn-primary" th:text="#{backup.backup}" th:href="@{/do_backup(lang=${param.lang})}"
+                    style="background-color: #f36f20;color: white;"></a>
+            &nbsp;
+            <a class="btn btn-primary" th:text="#{backup.restore}" th:href="@{/restore(lang=${param.lang})}"
+                    style="background-color: #f36f20;color: white;"></a>
+
+            <div th:replace="common::footer"></div>
+
+        </main>
+
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" src="asserts/js/jquery-3.2.1.slim.min.js"></script>
+<script type="text/javascript" src="asserts/js/popper.min.js"></script>
+<script type="text/javascript" src="asserts/js/bootstrap.min.js"></script>
+
+<!-- Icons -->
+<script type="text/javascript" src="asserts/js/feather.min.js"></script>
+<script>
+    feather.replace()
+</script>
+
+<!--交互式页面动态背景-->
+<script type="text/javascript" color="243,111,32" opacity='1' pointColor="255,255,255"
+        src="asserts/js/canvas-nest.js"></script>
+
+</body>
+
+</html>
