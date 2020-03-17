@@ -26,7 +26,7 @@ public class BorrowController {
     private CommonService commonService;
 
     @RequestMapping("/borrow")
-    public ModelAndView device(@RequestParam(value = "lang", required = false) String language,
+    public ModelAndView borrow(@RequestParam(value = "lang", required = false) String language,
                                @RequestParam(value = "id", required = false) String id,
                                @RequestParam(value = "devId", required = false) String devId,
                                @RequestParam(value = "brwerId", required = false) String brwerId,

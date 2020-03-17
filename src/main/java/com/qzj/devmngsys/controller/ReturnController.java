@@ -22,7 +22,7 @@ public class ReturnController {
     private ReturnService returnService;
 
     @RequestMapping("/return")
-    public ModelAndView device(@RequestParam(value = "lang", required = false) String language,
+    public ModelAndView returnDev(@RequestParam(value = "lang", required = false) String language,
                                @RequestParam(value = "id", required = false) String id,
                                @RequestParam(value = "devId", required = false) String devId,
                                @RequestParam(value = "rtnerId", required = false) String rtnerId,

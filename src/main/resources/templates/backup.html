@@ -14,6 +14,23 @@
     <!-- Custom styles for this template -->
     <link th:href="@{asserts/css/dashboard.css}" rel="stylesheet">
 
+    <script>
+        var cookies = document.cookie.split(";");
+        for(var i = 0; i < cookies.length; i++)
+        {
+            var cookie = cookies[i].split("=");
+            if (cookie[0].trim() === "msg") {
+                switch (cookie[1].trim()) {
+                    case "error":
+                        alert("\n备份失败\n\nBackup failed");
+                        break;
+                    default:
+                        alert("\n" + cookie[1].trim() + "已备份\n\n" + cookie[1].trim() + " is backed up");
+                        break;
+                }
+            }
+        }
+    </script>
 </head>
 
 <body style="height: 100%;">

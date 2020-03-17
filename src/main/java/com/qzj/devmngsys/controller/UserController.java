@@ -22,7 +22,7 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping("/user")
-    public ModelAndView device(@RequestParam(value = "lang", required = false) String language,
+    public ModelAndView user(@RequestParam(value = "lang", required = false) String language,
                                @RequestParam(value = "id", required = false) String id,
                                @RequestParam(value = "name", required = false) String name,
                                @RequestParam(value = "username", required = false) String username,
