@@ -64,7 +64,7 @@ public class UserController {
         int result = userService.update(id, name, username, pos, dep, email, tel, rem, isAdmin, current_username);
         if (result == -1) {
             Cookie cookie = new Cookie("msg", "Username");
-            cookie.setMaxAge(5);
+            cookie.setMaxAge(3);
             cookie.setPath(request.getContextPath());
             response.addCookie(cookie);
         }
@@ -89,17 +89,17 @@ public class UserController {
         int result = userService.add(id, name, username, pwd, pos, dep, email, tel, rem, isAdmin);
         if (result == -1) {
             Cookie cookie = new Cookie("msg", "EmployeeID");
-            cookie.setMaxAge(5);
+            cookie.setMaxAge(3);
             cookie.setPath(request.getContextPath());
             response.addCookie(cookie);
         } else if (result == -2) {
             Cookie cookie = new Cookie("msg", "Username");
-            cookie.setMaxAge(5);
+            cookie.setMaxAge(3);
             cookie.setPath(request.getContextPath());
             response.addCookie(cookie);
         } else if (result == -3) {
             Cookie cookie = new Cookie("msg", "ParseInt");
-            cookie.setMaxAge(5);
+            cookie.setMaxAge(3);
             cookie.setPath(request.getContextPath());
             response.addCookie(cookie);
         }

@@ -74,12 +74,12 @@ public class DeviceController {
         int result = deviceService.add(devId, devName, devSta, devDes, devRem);
         if (result == -1) {
             Cookie cookie = new Cookie("msg", "DevId");
-            cookie.setMaxAge(5);
+            cookie.setMaxAge(3);
             cookie.setPath(request.getContextPath());
             response.addCookie(cookie);
         } else if (result == -2) {
             Cookie cookie = new Cookie("msg", "DevSta");
-            cookie.setMaxAge(5);
+            cookie.setMaxAge(3);
             cookie.setPath(request.getContextPath());
             response.addCookie(cookie);
         }

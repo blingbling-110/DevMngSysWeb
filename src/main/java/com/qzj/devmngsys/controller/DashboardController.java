@@ -43,7 +43,7 @@ public class DashboardController {
                               HttpServletResponse response) {
         Cookie cookie = new Cookie("agreeRes",
                 String.valueOf(commonService.borrow(devId, reqerId, "设备转移")));
-        cookie.setMaxAge(5);
+        cookie.setMaxAge(3);
         cookie.setPath(request.getContextPath());
         response.addCookie(cookie);
         ModelAndView modelAndView = new ModelAndView("redirect:to_dashboard");

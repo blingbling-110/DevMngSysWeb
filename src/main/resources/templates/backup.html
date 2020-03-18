@@ -21,8 +21,14 @@
             var cookie = cookies[i].split("=");
             if (cookie[0].trim() === "msg") {
                 switch (cookie[1].trim()) {
-                    case "error":
+                    case "backupFailed":
                         alert("\n备份失败\n\nBackup failed");
+                        break;
+                    case "restoreFailed":
+                        alert("\n还原失败\n\nRestore failed");
+                        break;
+                    case "restoreSucceed":
+                        alert("\n还原成功\n\nRestore succeed");
                         break;
                     default:
                         alert("\n" + cookie[1].trim() + "已备份\n\n" + cookie[1].trim() + " is backed up");
@@ -45,9 +51,39 @@
             <br>
             <a class="btn btn-primary" th:text="#{backup.backup}" th:href="@{/do_backup(lang=${param.lang})}"
                     style="background-color: #f36f20;color: white;"></a>
-            &nbsp;
-            <a class="btn btn-primary" th:text="#{backup.restore}" th:href="@{/restore(lang=${param.lang})}"
-                    style="background-color: #f36f20;color: white;"></a>
+            <br>
+            <br>
+            <div class="table-responsive">
+                <p style="text-align: center;font-size: 20px;" th:text="#{backup.empty}"
+                   th:if="${session.backupFiles} == null or ${session.backupFiles.isEmpty()}"></p>
+                <table class="table table-striped table-sm"
+                       th:unless="${session.backupFiles} == null or ${session.backupFiles.isEmpty()}">
+                    <thead>
+                    <tr>
+                        <th>[[#{backup.fileName}]]</th>
+                        <th>[[#{backup.operation}]]</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="backupFile: ${session.backupFiles}">
+                        <td th:text="${backupFile}"></td>
+                        <td>
+                            <a class="btn btn-sm btn-danger" th:text="#{backup.restore}"
+                               th:if="${session.tbUserInfo.isIsadmin()}"
+                               th:href="@{/restore(lang=${param.lang}, fileName=${backupFile})}"
+                               onclick="return confirm(
+                                   '\n确认要还原数据库吗？\n\nAre you sure you want to restore the database?');"></a>
+                            <a class="btn btn-sm btn-danger" th:text="#{backup.delete}"
+                               th:if="${session.tbUserInfo.isIsadmin()}"
+                               th:href="@{/backup_delete(lang=${param.lang}, fileName=${backupFile})}"
+                               onclick="return confirm(
+                                   '\n确认要删除该备份文件吗？\n\n' +
+                                    'Are you sure you want to delete this backup file?');"></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
 
             <div th:replace="common::footer"></div>
 
