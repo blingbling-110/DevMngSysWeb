@@ -14,20 +14,7 @@
     <!-- Custom styles for this template -->
     <link th:href="@{asserts/css/dashboard.css}" rel="stylesheet">
 
-    <script>
-        var cookies = document.cookie.split(";");
-        for(var i = 0; i < cookies.length; i++)
-        {
-            var cookie = cookies[i].split("=");
-            if (cookie[0].trim() === "agreeRes") {
-                if (cookie[1].trim() === "0")
-                    alert("\n设备已成功转移\n\nDevice successfully transferred");
-                else
-                    alert("\n设备转移失败\n\nDevice transfer failed");
-                break;
-            }
-        }
-    </script>
+    <script th:replace="common::cookie_dialog"></script>
 </head>
 
 <body style="height: 100%;">
@@ -38,6 +25,7 @@
         <div th:replace="common::sidebar(page='dashboard')"></div>
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div th:replace="common::pwd_modal"></div>
             <h2 th:text="#{dashboard.my_device}">Section title</h2>
             <br>
             <div class="table-responsive">

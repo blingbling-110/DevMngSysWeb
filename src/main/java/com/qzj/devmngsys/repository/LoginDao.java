@@ -34,13 +34,24 @@ public class LoginDao {
      * @param username 用户名
      * @return 用户信息
      */
-    public TbUserInfo getUserInfo(String username) {
+    public TbUserInfo searchFromUsername(String username) {
         String sql = "select * from tb_userinfo where userid=?";
         try {
-            TbUserInfo tbUserInfo = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(TbUserInfo.class), username);
-            return tbUserInfo;
+            return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(TbUserInfo.class), username);
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
+    }
+
+    /**
+     * 修改密码
+     *
+     * @param pwd_ori   原密码
+     * @param pwd_new   新密码
+     * @param username  用户名
+     */
+    public void changePwd(String pwd_ori, String pwd_new, String username) {
+        String sql = "update tb_userinfo set pwd=? where userid=? and pwd=?";
+        jdbcTemplate.update(sql, pwd_new, username, pwd_ori);
     }
 }

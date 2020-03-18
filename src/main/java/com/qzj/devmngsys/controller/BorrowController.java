@@ -62,7 +62,7 @@ public class BorrowController {
             cookie.setPath(request.getContextPath());
             response.addCookie(cookie);
         } else if (result == -4) {
-            Cookie cookie = new Cookie("msg", "BorrowerIdError");
+            Cookie cookie = new Cookie("msg", "ParseInt");
             cookie.setMaxAge(3);
             cookie.setPath(request.getContextPath());
             response.addCookie(cookie);

@@ -73,17 +73,15 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a th:class="${page} == 'support' ? 'nav-link active' : 'nav-link'"
-                   th:href="@{/support(lang=${param.lang})}">
+                <a th:class="nav-link" href="Mailto:523497359@qq.com?Subject=企业设备管理系统网页版">
                     <img th:src="@{/asserts/img/email.png}" alt="email.png" class="feather feather-file"/>
-                    [[#{common.support}]] <span class="sr-only" th:if="${page} == 'support'">(current)</span>
+                    [[#{common.support}]]
                 </a>
             </li>
             <li class="nav-item">
-                <a th:class="${page} == 'password' ? 'nav-link active' : 'nav-link'"
-                   th:href="@{/password(lang=${param.lang})}">
+                <a th:class="nav-link" data-toggle="modal" data-target="#pwd" href="">
                     <img th:src="@{/asserts/img/key.png}" alt="key.png" class="feather feather-file"/>
-                    [[#{common.password}]] <span class="sr-only" th:if="${page} == 'password'">(current)</span>
+                    [[#{common.password}]]
                 </a>
             </li>
             <li class="nav-item">
@@ -94,9 +92,124 @@
                 </a>
             </li>
         </ul>
-
     </div>
 </nav>
+
+<div class="modal fade" id="pwd" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true"
+     th:fragment="pwd_modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="pwd_title">
+                    [[#{common.password}]]
+                </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+            </div>
+            <form id="pwd_data" th:action="@{/password(lang=${param.lang})}" method="post">
+                <div class="modal-body">
+                    <label class="control-label" th:text="#{common.oriPwd}+'&nbsp;:&nbsp;'" for="pwd_ori"></label>
+                    <input type="password" id="pwd_ori" name="pwd_ori" class="form-control" required="">
+                    <br>
+                    <label class="control-label" th:text="#{common.newPwd}+'&nbsp;:&nbsp;'" for="pwd_new"></label>
+                    <input type="password" id="pwd_new" name="pwd_new" class="form-control" required="">
+                    <br>
+                    <label class="control-label" th:text="#{common.cfmPwd}+'&nbsp;:&nbsp;'" for="pwd_cfm"></label>
+                    <input type="password" id="pwd_cfm" name="pwd_cfm" class="form-control" required="">
+                    <input name="requestURL" th:value="${#request.requestURL}" hidden="">
+                    <input name="username" th:value="${session.tbUserInfo.getUserid()}" hidden="">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="submit" class="btn btn-primary" th:text="#{common.password}"
+                            style="background-color: #f36f20;">
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script th:fragment="cookie_dialog">
+    var cookies = document.cookie.split(";");
+    for(var i = 0; i < cookies.length; i++)
+    {
+        var cookie = cookies[i].split("=");
+        if (cookie[0].trim() === "msg") {
+            switch (cookie[1].trim()) {
+                case "agreeSucceed":
+                    alert("\n设备已成功转移\n\nDevice successfully transferred");
+                    break;
+                case "agreeFailed":
+                    alert("\n设备转移失败\n\nDevice transfer failed");
+                    break;
+                case "DevId":
+                    alert("\n设备编号已存在\n\nDevice ID already exists");
+                    break;
+                case "DevSta":
+                    alert("\n请正确填写设备状态\n\nPlease fill in the device status correctly");
+                    break;
+                case "Username":
+                    alert("\n用户名已存在\n\nUsername already exists");
+                    break;
+                case "EmployeeID":
+                    alert("\n工号已存在\n\nEmployee ID already exists");
+                    break;
+                case "ParseInt":
+                    alert("\n工号只能为整数，且不能超过2147483647\n\n" +
+                        "The Employee ID can only be an integer and cannot exceed 2147483647");
+                    break;
+                case "BorrowFailed":
+                    alert("\n借用设备失败\n\nFailed to borrow device");
+                    break;
+                case "DeviceBorrowed":
+                    alert("\n设备已借出，请在设备总览中进行借用请求操作\n\n" +
+                        "The device has been borrowed, please make a borrow request in the device overview");
+                    break;
+                case "DeviceIdNotExist":
+                    alert("\n设备编号不存在\n\nDevice ID does not exist");
+                    break;
+                case "BorrowerIdNotExist":
+                    alert("\n借用人工号不存在\n\nBorrower's employee ID does not exist");
+                    break;
+                case "ReturnFailed":
+                    alert("\n归还设备失败\n\nFailed to return device");
+                    break;
+                case "DeviceReturned":
+                    alert("\n设备已归还\n\n" +
+                        "The device has been returned");
+                    break;
+                case "ReturnerIdNotExist":
+                    alert("\n归还人工号不存在\n\nReturner's employee ID does not exist");
+                    break;
+                case "backupFailed":
+                    alert("\n备份失败\n\nBackup failed");
+                    break;
+                case "restoreFailed":
+                    alert("\n还原失败\n\nRestore failed");
+                    break;
+                case "restoreSucceed":
+                    alert("\n还原成功\n\nRestore succeed");
+                    break;
+                case "PwdChanged":
+                    alert("\n密码已修改\n\nPassword changed");
+                    break;
+                case "ConfirmPwd":
+                    alert("\n确认密码与新密码不一致\n\nConfirm password does not match new password");
+                    break;
+                case "OriPwd":
+                    alert("\n原密码输入错误\n\nIncorrect old password entered");
+                    break;
+                default:
+                    alert("\n" + cookie[1].trim() + "已备份\n\n" + cookie[1].trim() + " is backed up");
+                    break;
+            }
+        }
+    }
+</script>
 
 <!--页脚-->
 <div th:fragment="footer" class="text-center">

@@ -14,34 +14,7 @@
     <!-- Custom styles for this template -->
     <link th:href="@{asserts/css/dashboard.css}" rel="stylesheet">
 
-    <script>
-        var cookies = document.cookie.split(";");
-        for(var i = 0; i < cookies.length; i++)
-        {
-            var cookie = cookies[i].split("=");
-            if (cookie[0].trim() === "msg") {
-                switch (cookie[1].trim()) {
-                    case "ReturnFailed":
-                        alert("\n归还设备失败\n\nFailed to return device");
-                        break;
-                    case "DeviceReturned":
-                        alert("\n设备已归还\n\n" +
-                            "The device has been returned");
-                        break;
-                    case "DeviceIdNotExist":
-                        alert("\n设备编号不存在\n\nDevice ID does not exist");
-                        break;
-                    case "ReturnerIdError":
-                        alert("\n工号只能为整数，且不能超过2147483647\n\n" +
-                            "The Employee ID can only be an integer and cannot exceed 2147483647");
-                        break;
-                    case "ReturnerIdNotExist":
-                        alert("\n归还人工号不存在\n\nReturner's employee ID does not exist");
-                        break;
-                }
-            }
-        }
-    </script>
+    <script th:replace="common::cookie_dialog"></script>
 </head>
 
 <body style="height: 100%;">
@@ -52,6 +25,7 @@
         <div th:replace="common::sidebar(page='return')"></div>
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div th:replace="common::pwd_modal"></div>
             <h2 th:text="#{return.title}">Section title</h2>
             <br>
             <button class="btn btn-primary" th:text="#{return.add}"

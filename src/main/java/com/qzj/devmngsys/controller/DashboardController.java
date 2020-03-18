@@ -41,11 +41,18 @@ public class DashboardController {
                               @RequestParam(value = "reqerId") String reqerId,
                               HttpServletRequest request,
                               HttpServletResponse response) {
-        Cookie cookie = new Cookie("agreeRes",
-                String.valueOf(commonService.borrow(devId, reqerId, "设备转移")));
-        cookie.setMaxAge(3);
-        cookie.setPath(request.getContextPath());
-        response.addCookie(cookie);
+        int result = commonService.borrow(devId, reqerId, "设备转移");
+        if (result == 0) {
+            Cookie cookie = new Cookie("msg", "agreeSucceed");
+            cookie.setMaxAge(3);
+            cookie.setPath(request.getContextPath());
+            response.addCookie(cookie);
+        }else {
+            Cookie cookie = new Cookie("msg", "agreeFailed");
+            cookie.setMaxAge(3);
+            cookie.setPath(request.getContextPath());
+            response.addCookie(cookie);
+        }
         ModelAndView modelAndView = new ModelAndView("redirect:to_dashboard");
         return localeService.addLang(modelAndView, language);
     }

@@ -26,7 +26,7 @@ public class LoginController {
     @PostMapping("/login")
     public ModelAndView login(@RequestParam("username") String username,
                               @RequestParam("password") String password,
-                              @RequestParam("lang") String language,
+                              @RequestParam(value = "lang", required = false) String language,
                               @RequestParam(value = "remember", required = false) String remember,
                               HttpSession httpSession,
                               RedirectAttributes redirectAttributes,
@@ -54,7 +54,7 @@ public class LoginController {
     }
 
     @RequestMapping("/sign_out")
-    public ModelAndView signOut(@RequestParam("lang") String language,
+    public ModelAndView signOut(@RequestParam(value = "lang", required = false) String language,
                                 HttpServletRequest request,
                                 HttpServletResponse response) {
         HttpSession httpSession = request.getSession(false);//防止创建会话
@@ -75,5 +75,36 @@ public class LoginController {
             }
         }
         return localeService.addLang(new ModelAndView("redirect:/index"), language);
+    }
+
+    @RequestMapping("/password")
+    public ModelAndView password(@RequestParam(value = "lang", required = false) String language,
+                                 @RequestParam("pwd_ori") String pwd_ori,
+                                 @RequestParam("pwd_new") String pwd_new,
+                                 @RequestParam("pwd_cfm") String pwd_cfm,
+                                 @RequestParam("requestURL") String requestURL,
+                                 @RequestParam("username") String username,
+                                 HttpServletRequest request,
+                                 HttpServletResponse response) {
+        int result = loginService.changePwd(pwd_ori, pwd_new, pwd_cfm, username);
+        if (result == 0) {
+            Cookie cookie = new Cookie("msg", "PwdChanged");
+            cookie.setMaxAge(3);
+            cookie.setPath(request.getContextPath());
+            response.addCookie(cookie);
+        }else if (result == -1) {
+            Cookie cookie = new Cookie("msg", "ConfirmPwd");
+            cookie.setMaxAge(3);
+            cookie.setPath(request.getContextPath());
+            response.addCookie(cookie);
+        }else if (result == -2) {
+            Cookie cookie = new Cookie("msg", "OriPwd");
+            cookie.setMaxAge(3);
+            cookie.setPath(request.getContextPath());
+            response.addCookie(cookie);
+        }
+        ModelAndView modelAndView = new ModelAndView("redirect:"
+                + requestURL.substring(requestURL.lastIndexOf("/")));
+        return localeService.addLang(modelAndView, language);
     }
 }
