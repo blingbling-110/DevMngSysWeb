@@ -33,7 +33,7 @@ C/S version of https://github.com/blingbling-110/DevMngSys
 
 单击导航栏中的“设备总览”进入搜索窗口：
 
-![searchDev](assets\searchDev.png)
+![searchDev](assets/searchDev.png)
 
 输入设备编号或其他信息（支持模糊搜索），单击搜索即可查看符合搜索条件设备的当前状态。
 
@@ -125,7 +125,7 @@ C/S version of https://github.com/blingbling-110/DevMngSys
 
 若一般用户需要借用库存中的设备，则需要联系您并提供设备编号及其工号。
 
-![addBrw](assets\addBrw.png)
+![addBrw](assets/addBrw.png)
 
 单击借用管理页面左上角的“借用设备”按钮，弹出借用设备模态框
 
