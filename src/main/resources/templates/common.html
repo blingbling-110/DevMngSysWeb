@@ -66,10 +66,9 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a th:class="${page} == 'help' ? 'nav-link active' : 'nav-link'"
-                   th:href="@{/help(lang=${param.lang})}">
+                <a th:class="nav-link" href="https://github.com/blingbling-110/DevMngSysWeb" target="_blank">
                     <img th:src="@{/asserts/img/help.png}" alt="help.png" class="feather feather-file"/>
-                    [[#{common.help}]] <span class="sr-only" th:if="${page} == 'help'">(current)</span>
+                    [[#{common.help}]]
                 </a>
             </li>
             <li class="nav-item">
