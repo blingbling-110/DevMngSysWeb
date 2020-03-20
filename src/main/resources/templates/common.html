@@ -202,6 +202,10 @@
                 case "OriPwd":
                     alert("\n原密码输入错误\n\nIncorrect old password entered");
                     break;
+                case "Word":
+                    alert("\n用户名只能包括大小写字母、数字和下划线\n\n" +
+                        "Username can only include uppercase and lowercase letters, numbers, and underscores");
+                    break;
                 default:
                     alert("\n" + cookie[1].trim() + "已备份\n\n" + cookie[1].trim() + " is backed up");
                     break;

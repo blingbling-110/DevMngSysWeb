@@ -8,6 +8,8 @@ import org.thymeleaf.util.StringUtils;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 
 public class LoginHandlerInterceptor implements HandlerInterceptor {
     @Autowired
@@ -33,7 +35,7 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
                 if (StringUtils.equals(cookie.getName(), "username")) {
                     username = cookie.getValue();
                 } else if (StringUtils.equals(cookie.getName(), "password")) {
-                    password = cookie.getValue();
+                    password = URLDecoder.decode(cookie.getValue(), StandardCharsets.UTF_8);
                 }
             }
         }

@@ -67,6 +67,11 @@ public class UserController {
             cookie.setMaxAge(3);
             cookie.setPath(request.getContextPath());
             response.addCookie(cookie);
+        }else if (result == -2) {
+            Cookie cookie = new Cookie("msg", "Word");
+            cookie.setMaxAge(3);
+            cookie.setPath(request.getContextPath());
+            response.addCookie(cookie);
         }
         ModelAndView modelAndView = new ModelAndView("redirect:user");
         return localeService.addLang(modelAndView, language);
@@ -99,6 +104,11 @@ public class UserController {
             response.addCookie(cookie);
         } else if (result == -3) {
             Cookie cookie = new Cookie("msg", "ParseInt");
+            cookie.setMaxAge(3);
+            cookie.setPath(request.getContextPath());
+            response.addCookie(cookie);
+        } else if (result == -4) {
+            Cookie cookie = new Cookie("msg", "Word");
             cookie.setMaxAge(3);
             cookie.setPath(request.getContextPath());
             response.addCookie(cookie);

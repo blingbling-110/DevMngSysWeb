@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 @Service
 public class UserService {
@@ -60,6 +61,8 @@ public class UserService {
 
     public int update(String id, String name, String username, String pos, String dep, String email,
                       String tel, String remark, boolean isAdmin, String current_username) {
+        if (!Pattern.matches("\\w*", username))
+            return -2;
         List<TbUserInfo> userList = commonDao.searchUserInfo(null, null, null, null, null,
                 null, null, null, false);
         userList.addAll(commonDao.searchUserInfo(null, null, null, null, null, null,
@@ -84,6 +87,8 @@ public class UserService {
 
     public int add(String id, String name, String username, String  pwd, String pos, String dep, String email,
                    String tel, String remark, boolean isAdmin) {
+        if (!Pattern.matches("\\w*", username))
+            return -4;
         List<TbUserInfo> userList = commonDao.searchUserInfo(null, null, null, null, null,
                 null, null, null, false);
         userList.addAll(commonDao.searchUserInfo(null, null, null, null, null, null,

@@ -15,6 +15,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 @Controller
 public class LoginController {
@@ -41,7 +43,7 @@ public class LoginController {
                 cookie.setMaxAge(90 * 24 * 60 * 60);//cookie过期时间设置为三个月
                 cookie.setPath(request.getContextPath());
                 response.addCookie(cookie);
-                cookie = new Cookie("password", password);
+                cookie = new Cookie("password", URLEncoder.encode(password, StandardCharsets.UTF_8));
                 cookie.setMaxAge(90 * 24 * 60 * 60);//cookie过期时间设置为三个月
                 cookie.setPath(request.getContextPath());
                 response.addCookie(cookie);
