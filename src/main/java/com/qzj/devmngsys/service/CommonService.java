@@ -34,7 +34,8 @@ public class CommonService {
         item.setId(devId);
         try {
             TbDevInfo tbDevInfo = commonDao.getDevInfo(item);
-            if (!tbDevInfo.getStatus().equals("库存中"))
+            if (!tbDevInfo.getStatus().equals("库存中")
+                    && !(tbDevInfo.getStatus().startsWith("工号：") && remark.equals("设备转移")))
                 return -2;//设备已借出，请在设备总览中进行借用请求操作
         }catch (EmptyResultDataAccessException e) {
             return -3;//设备编号不存在
